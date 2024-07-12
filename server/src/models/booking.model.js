@@ -18,6 +18,10 @@ const bookingSchema = new mongoose.Schema({
   payment: {
     type: Number,
     required: true
+  },
+  isAccepted:{
+    type:Boolean,
+    default:false
   }
 }, { timestamps: true });
 
