@@ -2,45 +2,169 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.model.js";
 import asyncHandler from 'express-async-handler';
+import nodemailer from "nodemailer";
+import { uploadToCloudinary, deleteFromCloudinary } from '../utils/cloudinary.js';
 
-const register = asyncHandler(async (req, res) => {
-    const { name, username, email, password } = req.body;
+// Temporary store for OTPs
+const tempUserStore = {};
 
-    // Check if user already exists
+// Function to generate OTP
+function generateOTP(length) {
+    const digits = '0123456789';
+    let otp = '';
+    for (let i = 0; i < length; i++) {
+        otp += digits[Math.floor(Math.random() * digits.length)];
+    }
+    return otp;
+}
+
+// Nodemailer setup
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+    },
+    tls: {
+        rejectUnauthorized: false
+    }
+});
+
+// Initiate register endpoint
+const initiateRegister = asyncHandler(async (req, res) => {
+    const { username, email, password, name, age, lat, long, address, gender } = req.body;
+
+    if (!username || !email || !password || !name || !age || !lat || !long || !address || !gender) {
+        throw new ApiError(400, "All fields are required");
+    }
+
     const existingUser = await User.findOne({ $or: [{ email }, { username }] });
     if (existingUser) {
         throw new ApiError(400, 'User already exists with this email or username');
     }
 
-    // Create a new user
-    const user = new User({ name, username, email, password });
+    const otp = generateOTP(4);
+    // Store user details and OTP
+    tempUserStore[email] = { username, password, name, age, lat, long, address, gender, otp };
+
+    const mailOptions = {
+        from: process.env.EMAIL,
+        to: email,
+        subject: `Hello! ${name}, It's a verification mail`,
+        html: `<strong>Your OTP code is: ${otp}</strong>`,
+    };
+
+    try {
+        await transporter.sendMail(mailOptions);
+        res.status(200).json(new ApiResponse(200, email, "OTP sent successfully"));
+    } catch (error) {
+        throw new ApiError(500, `Error while sending OTP ${error}`);
+    }
+});
+
+// Verify OTP endpoint
+const verifyOtp = asyncHandler(async (req, res) => {
+    const { email, otp } = req.body;
+
+    // Check if email and OTP are provided
+    if (!email || !otp) {
+        throw new ApiError(400, "Email and OTP are required");
+    }
+
+    // Check if the OTP exists in the temporary store
+    const tempUser = tempUserStore[email];
+    if (!tempUser) {
+        throw new ApiError(400, "No OTP generated for this email");
+    }
+
+    // Verify the OTP
+    if (tempUser.otp !== otp) {
+        throw new ApiError(400, "Invalid OTP");
+    }
+
+    // After verification, create the user
+    const { username, password, name, age, lat, long, address, gender } = tempUser;
+    const user = await User.create({ username, email, password, name, age, lat, long, address, gender });
+
+    const accessToken = user.generateAccessToken();
+    delete tempUserStore[email]; // Clean up the temporary user data
+
+    res.status(200).json(new ApiResponse(200, { user, accessToken }, "User registered successfully"));
+});
+
+// Login endpoint
+const login = asyncHandler(async (req, res) => {
+    const { identifier, password } = req.body;
+
+    if (!identifier || !password) {
+        throw new ApiError(400, "All fields are required");
+    }
+
+    const user = await User.findOne({ $or: [{ email: identifier }, { username: identifier }] });
+    if (!user) {
+        throw new ApiError(400, "User doesn't exist");
+    }
+
+    const isPasswordMatch = await user.isPasswordCorrect(password);
+    if (!isPasswordMatch) {
+        throw new ApiError(400, "Wrong password");
+    }
+
+    const accessToken = user.generateAccessToken();
+    res.status(200).json(new ApiResponse(200, { user, accessToken }, "User logged in successfully"));
+});
+
+// Get user by ID
+const getUserById = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+
+    if (!id) {
+        throw new ApiError(400, 'User ID is required');
+    }
+
+    const user = await User.findById(id).select('-password'); // Exclude password
+
+    if (!user) {
+        throw new ApiError(404, 'User not found');
+    }
+
+    res.status(200).json(new ApiResponse(200, user, 'User retrieved successfully'));
+});
+
+// Update profile picture
+const updateProfilePicture = asyncHandler(async (req, res) => {
+    const userId = req.user._id;
+    const file = req.file;
+
+    if (!file) {
+        throw new ApiError(400, 'No file uploaded');
+    }
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+        throw new ApiError(404, 'User not found');
+    }
+
+    if (user.pfp) {
+        await deleteFromCloudinary(user.pfp); // Delete old profile picture
+    }
+
+    const uploadResponse = await uploadToCloudinary(file.path);
+    if (!uploadResponse) {
+        throw new ApiError(500, 'Failed to upload image');
+    }
+
+    user.pfp = uploadResponse.secure_url;
     await user.save();
 
-    // Generate access token
-    const token = user.generateAccessToken();
-
-    res.status(201).json(new ApiResponse(201, 'User registered successfully', { user, token }));
+    res.status(200).json(new ApiResponse(200, user, 'Profile picture updated successfully'));
 });
 
-const login = asyncHandler(async (req, res) => {
-    const { email, password } = req.body;
-
-    // Check if user exists
-    const user = await User.findOne({ email });
-    if (!user) {
-        throw new ApiError(401, 'Invalid email or password');
-    }
-
-    // Check if password is correct
-    const isPasswordCorrect = await user.isPasswordCorrect(password);
-    if (!isPasswordCorrect) {
-        throw new ApiError(401, 'Invalid email or password');
-    }
-
-    // Generate access token
-    const token = user.generateAccessToken();
-
-    res.status(200).json(new ApiResponse(200, 'User logged in successfully', { user, token }));
-});
-
-export { register, login };
+export {
+    initiateRegister,
+    login,
+    verifyOtp,
+    getUserById,
+    updateProfilePicture,
+};
