@@ -4,6 +4,8 @@ import Footer from '../components/Footer';
 import Background from '../components/Background';
 import Hero from '../components/Hero';
 import ShuffleHero from '../components/Shuffle';
+import FAQ from '../components/FAQ';
+import Steps from '../components/Steps';
 function Home({ children }) {
     return (
         <>
@@ -13,6 +15,8 @@ function Home({ children }) {
                 </header>
                 <Hero />
                 <ShuffleHero />
+                <Steps/>
+                <FAQ/>
             </Background>
             <Footer />
         </>
