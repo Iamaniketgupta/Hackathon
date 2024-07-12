@@ -2,13 +2,11 @@ import React from 'react'
 import Navbar from './Navbar';
 import Footer from './Footer';
 
-function Back({children}) {
+function Background({children}) {
   return (
     <>
       <div>
-      <header className="fixed inset-x-0 top-0 z-50">
-      <Navbar/>
-      </header>
+      
       <div className="relative isolate px-6 pt-14 lg:px-8">
         <div
           aria-hidden="true"
@@ -23,7 +21,6 @@ function Back({children}) {
           />
         </div>
     {children}
-    
     <div
           aria-hidden="true"
           className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
@@ -38,9 +35,8 @@ function Back({children}) {
         </div>
       </div>
     </div>
-    <Footer/>
     </>
   )
 }
 
-export default Back
+export default Background
