@@ -75,9 +75,32 @@ const getUnacceptedBookings = asyncHandler(async (req, res) => {
 
     res.status(200).json(new ApiResponse(200, bookings, "Unaccepted bookings retrieved successfully"));
 });
+// Mark a booking as paid
+const payForBooking = asyncHandler(async (req, res) => {
+    const { bookingId } = req.body;
+    const ragPickerId = req.ragPicker._id; // Assuming you have RagPicker authenticated and their info in req.ragPicker
+
+    // Find the booking
+    const booking = await Booking.findById(bookingId);
+    if (!booking) {
+        throw new ApiError(404, "Booking not found");
+    }
+
+    // Check if the booking belongs to the authenticated RagPicker
+    if (booking.ragPicker.toString() !== ragPickerId.toString()) {
+        throw new ApiError(403, "You are not authorized to mark this booking as paid");
+    }
+
+    // Update the booking
+    booking.isPaid = true;
+    await booking.save();
+
+    res.status(200).json(new ApiResponse(200, booking, "Booking marked as paid successfully"));
+});
 
 export {
     createBooking,
     acceptBooking,
-    getUnacceptedBookings
+    getUnacceptedBookings,
+    payForBooking // Export the new controller
 };

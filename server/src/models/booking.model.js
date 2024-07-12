@@ -22,6 +22,10 @@ const bookingSchema = new mongoose.Schema({
   isAccepted:{
     type:Boolean,
     default:false
+  },
+  isPaid:{
+    type:Boolean,
+    default:false
   }
 }, { timestamps: true });
 
