@@ -23,26 +23,26 @@ const userSchema = new mongoose.Schema({
   },
   age: {
     type: Number,
-    required: true
+
   },
   pfp: {
     type: String // URL to the profile picture
   },
   lat: {
     type: Number,
-    required: true
+
   },
   long: {
     type: Number,
-    required: true
+
   },
   address: {
     type: String,
-    required: true
+
   },
   gender: {
     type: String,
-    required: true
+
   }
 }, { timestamps: true });
 
