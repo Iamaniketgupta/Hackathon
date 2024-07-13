@@ -18,6 +18,8 @@ const router = createBrowserRouter(
     createRoutesFromChildren(
         <Route path="/" element={<App />}>
             <Route path="" element={<Home />} />
+            <Route path="/rp/signin" element={<RagAuth />} />
+            <Route path="/user/signin" element={<UserAuth />} />
             <Route path='/ragpicker/dashboard' element={<RagpickerDashboard/>}>
                 <Route path='' element={<Dashboard/>} />
                 <Route path='/ragpicker/dashboard/profile' element={<RagPickerProfile/>}  />
