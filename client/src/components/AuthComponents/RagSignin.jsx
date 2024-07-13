@@ -61,7 +61,7 @@ const RagSignin = ({ setRegisterTab }) => {
     };
 
     return (
-        <div className='max-w-md mx-auto p-5'>
+        <div className='text-gray-800 max-w-md mx-auto p-5'>
             {!otpsent ? (
                 <>
                     <h1 className='text-center text-2xl md:text-3xl mb-8 font-semibold text-gray-800'>Partner as Rag Picker</h1>
