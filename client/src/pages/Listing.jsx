@@ -25,7 +25,7 @@ function Listing() {
                             </select>
                         </form>
                     </div>
-                    <div className="grid md:grid-cols-3 gap-10 min-w-screen items-center justify-center  min-h-screen w-full">
+                    <div className=" flex flex-col md:grid md:grid-cols-3 gap-10 min-w-screen items-center justify-center  min-h-screen w-full">
                        <RagCard/>
                        <RagCard/>
                        <RagCard/>
