@@ -7,7 +7,7 @@ const accessToken = localStorage.getItem('accessToken');
 
 // Create an instance of axios
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8000', // Replace with your API base URL
+  baseURL: 'http://localhost:8000',
 });
 
 // Set the Authorization header for every request

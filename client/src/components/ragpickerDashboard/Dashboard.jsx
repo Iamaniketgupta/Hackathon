@@ -1,11 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FaCalendarCheck, FaCheckCircle, FaDollarSign, FaStar } from 'react-icons/fa';
 import CompletedJob from './CompletedJob';
 import OngoingJob from './OngoingJob';
 import BookingOffers from './BookingOFfers';
 import "./style.css"
+import { useSelector } from 'react-redux';
+import axiosInstance from '../../axiosConfig/axiosConfig';
 
 const Dashboard = () => {
+
+  const getRagpicker = async()=>{
+    try {
+      const response =await  axiosInstance.get("/rp/get")
+      console.log("Response L " , response);
+    } catch (error) {
+      console.log("error : " , error)
+    }
+  }
+
+  useEffect(()=>{
+    getRagpicker();
+  },[])
     
   return (
     <div className='p-4 text-white'>

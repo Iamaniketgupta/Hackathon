@@ -1,9 +1,15 @@
 import React, { useRef, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { login } from '../../../store/authSlice';
 
-const Otp = ({ setOtpSent, requestapi, formData }) => {
+const Otp = ({ setOtpSent, requestapi, formData , type}) => {
     const [otpValue, setOtpValue] = useState('');
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     
     const verifyOTP = async (e) => {
         e.preventDefault();
@@ -13,9 +19,27 @@ const Otp = ({ setOtpSent, requestapi, formData }) => {
                 otp: otpValue
             });
 
-            if (response.status === 200) {
+            console.log("response : " , response.data)
+            
+
+            if (response.status === 200 || response.status === 201) {
+                localStorage.setItem("accessToken" , response?.data?.data?.accessToken)
                 setOtpSent(true);
                 toast.success("🎉 OTP Verified Successfully!");
+                console.log("pahucnh")
+                if(type === 'ragpicker'){
+                    const obj = {
+                        user : response?.data?.data.ragPicker
+                    }
+                    dispatch(login(obj));
+                }else{
+                    
+                    const obj = {
+                        user : response?.data?.data.user
+                    }
+                    dispatch(login(obj));
+                }
+                navigate(`/${type}/dashboard`)
             } else {
                 toast.error("Failed to verify OTP. Please try again.");
             }
@@ -55,7 +79,7 @@ const Otp = ({ setOtpSent, requestapi, formData }) => {
     };
 
     return (
-        <div className="max-w-md mx-auto p-5">
+        <div className="max-w-md mx-auto p-5 text-black">
             <div className="font-semibold text-3xl text-center mb-8">
                 <p>Email Verification</p>
             </div>

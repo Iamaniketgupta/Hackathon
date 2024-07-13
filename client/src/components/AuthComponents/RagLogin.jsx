@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { requestUrl } from '../../../constant';
+import { useDispatch } from 'react-redux';
+import { login } from '../../store/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const RagLogin = ({ setRegisterTab }) => {
     const [formData, setFormData] = useState({
         identifier: '',
         password: '',
     });
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
@@ -27,6 +32,13 @@ const RagLogin = ({ setRegisterTab }) => {
             if (response.status === 200) {
                 toast.success("🚀 Login successful!");
                 console.log('Login successful:', response.data);
+                const obj = {
+                    user: response?.data.data?.ragPicker
+                }
+                dispatch(login(obj));
+                navigate("/ragpicker/dashboard")
+
+
             } else {
                 toast.error("Login failed. Please try again.");
             }
@@ -42,11 +54,11 @@ const RagLogin = ({ setRegisterTab }) => {
     };
 
     return (
-        <div className='py-4 '>
+        <div className='py-4 text-gray-800'>
             <h1 className='text-center text-2xl mb-10 text-gray-800'>Welcome back Eco Warrior</h1>
-            <form className='mx-5' onSubmit={handleSubmit}>
+            <form className='mx-5 ' onSubmit={handleSubmit}>
                 <div className='w-full flex flex-col gap-2 my-4'>
-                    <label htmlFor="identifier" className='px-2'>
+                    <label htmlFor="identifier" className='px-2 text-black'>
                         Username or Email <span className='text-red-500'>*</span>
                     </label>
                     <input
@@ -62,7 +74,7 @@ const RagLogin = ({ setRegisterTab }) => {
                     />
                 </div>
                 <div className='w-full flex flex-col gap-2 my-4'>
-                    <label htmlFor="password" className='px-2'>
+                    <label htmlFor="password" className='px-2 text-black'>
                         Password <span className='text-red-500'>*</span>
                     </label>
                     <input

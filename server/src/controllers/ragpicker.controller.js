@@ -75,6 +75,8 @@ const verifyRagPickerOTP = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Email and OTP are required");
     }
 
+    console.log("otp : " ,otp)
+
     const tempRagPicker = {...tempRagPickerStore[email]};
 console.log(tempRagPicker.otp)
     if (!tempRagPicker || tempRagPicker.otp !== otp) {

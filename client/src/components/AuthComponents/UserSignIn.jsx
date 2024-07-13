@@ -40,6 +40,8 @@ const UserSignin = ({ setRegisterTab }) => {
             setLoading(true);
 
             const response = await axios.post(`${requestapi}/register`, formData);
+
+            console.log("response : " ,response.data)
             if (response.status === 200) {
                 setOtpSent(true);
                 toast.success("🚀 OTP Sent on your Email");
@@ -61,7 +63,7 @@ const UserSignin = ({ setRegisterTab }) => {
     };
 
     return (
-        <div className='max-w-md mx-auto p-5'>
+        <div className=' text-gray-800 max-w-md mx-auto p-5'>
             {!otpsent ? (
                 <>
                     <h1 className='text-center text-2xl md:text-3xl mb-8 font-semibold text-gray-800'>Register as User</h1>
@@ -168,7 +170,7 @@ const UserSignin = ({ setRegisterTab }) => {
                     </form>
                 </>
             ) : (
-                <Otp formData={formData} requestapi={requestapi} setOtpSent={setOtpSent} />
+                <Otp formData={formData} requestapi={requestapi} setOtpSent={setOtpSent} type={"user"} />
             )}
         </div>
     );
