@@ -56,6 +56,7 @@ const acceptBooking = asyncHandler(async (req, res) => {
     }
 
     // Update the booking
+    booking.status = "accepted";
     booking.isAccepted = true;
     await booking.save();
 
@@ -98,9 +99,81 @@ const payForBooking = asyncHandler(async (req, res) => {
     res.status(200).json(new ApiResponse(200, booking, "Booking marked as paid successfully"));
 });
 
+// Mark a booking as completed by the user
+const completeBookingByUser = asyncHandler(async (req, res) => {
+    const { bookingId } = req.body;
+    const userId = req.user._id; // Assuming you have user authenticated and their info in req.user
+
+    // Find the booking
+    const booking = await Booking.findById(bookingId);
+    if (!booking) {
+        throw new ApiError(404, "Booking not found");
+    }
+
+    // Check if the booking belongs to the authenticated user
+    if (booking.user.toString() !== userId.toString()) {
+        throw new ApiError(403, "You are not authorized to complete this booking");
+    }
+
+    // Update the booking status to completed
+    booking.status = "completed";
+    await booking.save();
+
+    res.status(200).json(new ApiResponse(200, booking, "Booking marked as completed successfully"));
+});
+
+// Cancel a booking by the user
+const cancelBookingByUser = asyncHandler(async (req, res) => {
+    const { bookingId } = req.body;
+    const userId = req.user._id; // Assuming you have user authenticated and their info in req.user
+
+    // Find the booking
+    const booking = await Booking.findById(bookingId);
+    if (!booking) {
+        throw new ApiError(404, "Booking not found");
+    }
+
+    // Check if the booking belongs to the authenticated user
+    if (booking.user.toString() !== userId.toString()) {
+        throw new ApiError(403, "You are not authorized to cancel this booking");
+    }
+
+    // Update the booking status to canceled
+    booking.status = "canceled";
+    await booking.save();
+
+    res.status(200).json(new ApiResponse(200, booking, "Booking canceled successfully"));
+});
+
+// Cancel a booking by the RagPicker
+const cancelBookingByRagPicker = asyncHandler(async (req, res) => {
+    const { bookingId } = req.body;
+    const ragPickerId = req.ragPicker._id; // Assuming you have RagPicker authenticated and their info in req.ragPicker
+
+    // Find the booking
+    const booking = await Booking.findById(bookingId);
+    if (!booking) {
+        throw new ApiError(404, "Booking not found");
+    }
+
+    // Check if the booking belongs to the authenticated RagPicker
+    if (booking.ragPicker.toString() !== ragPickerId.toString()) {
+        throw new ApiError(403, "You are not authorized to cancel this booking");
+    }
+
+    // Update the booking status to canceled
+    booking.status = "canceled";
+    await booking.save();
+
+    res.status(200).json(new ApiResponse(200, booking, "Booking canceled successfully"));
+});
+
 export {
     createBooking,
     acceptBooking,
     getUnacceptedBookings,
-    payForBooking // Export the new controller
+    payForBooking,
+    completeBookingByUser,
+    cancelBookingByUser,
+    cancelBookingByRagPicker
 };
