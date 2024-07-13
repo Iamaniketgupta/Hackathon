@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.marker-start {
+    background-color: red; /* Color for 'You' marker */
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
+
+  .marker-start::before{
+    content:"You";
+    padding:10px;
+    color:black;
+    position:absolute;
+  right:5px;
+  }
+
+  .marker-end::after {
+    content:"RagPicker";
+    padding:10px;
+    color:black;
+    position:absolute;
+    left:5px;
+  }
+  
+  .marker-end {
+    background-color: green; /* Color for 'Ragpicker' marker */
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
