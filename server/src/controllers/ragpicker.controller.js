@@ -7,7 +7,7 @@ import { uploadToCloudinary, deleteFromCloudinary, publicId } from '../utils/clo
 import jwt from "jsonwebtoken";
 
 const tempRagPickerStore = {}; // Temporary store for OTP
-
+console.log(tempRagPickerStore)
 // Function to generate OTP
 function generateOTP(length) {
     const digits = '0123456789';
@@ -34,8 +34,19 @@ const transporter = nodemailer.createTransport({
 const initiateRagPickerRegistration = asyncHandler(async (req, res) => {
     const { name, age, address, lat, long, gender, pricePerHour, username, email, password } = req.body;
 
-    if (!name || !age || !address || !lat || !long || !gender || !pricePerHour || !username || !email || !password) {
+    if (!name || !username || !email || !password) {
         throw new ApiError(400, "All fields are required");
+    }
+
+    // Check if the username or email already exists
+    const existingUser = await RagPicker.findOne({ $or: [{ username }, { email }] });
+    if (existingUser) {
+        if (existingUser.username === username) {
+            throw res.status(400).json({message:"Username is not available Try unique username"});
+        }
+        if (existingUser.email === email) {
+            throw res.status(400).json({message:"Email Already Exists"});
+        }
     }
 
     const otp = generateOTP(4);
@@ -56,16 +67,16 @@ const initiateRagPickerRegistration = asyncHandler(async (req, res) => {
     }
 });
 
+
 // Verify OTP and create RagPicker
 const verifyRagPickerOTP = asyncHandler(async (req, res) => {
     const { email, otp } = req.body;
-
     if (!email || !otp) {
         throw new ApiError(400, "Email and OTP are required");
     }
 
-    const tempRagPicker = tempRagPickerStore[email];
-
+    const tempRagPicker = {...tempRagPickerStore[email]};
+console.log(tempRagPicker.otp)
     if (!tempRagPicker || tempRagPicker.otp !== otp) {
         throw new ApiError(400, "Invalid OTP");
     }
@@ -77,7 +88,7 @@ const verifyRagPickerOTP = asyncHandler(async (req, res) => {
     // Generate access token
     const accessToken = newRagPicker.generateAccessToken();
 
-    res.status(201).json(new ApiResponse(201, { newRagPicker, accessToken }, "Rag Picker created successfully"));
+    res.status(201).json(new ApiResponse(201, { newRagPicker, accessToken }, "Account created successfully"));
 });
 
 // Login controller
