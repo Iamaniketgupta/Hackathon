@@ -41,8 +41,6 @@ const deleteFromCloudinary = async(publicId) => {
 }
 
 
-
-
 const publicId = async (url) => {
     try {
         const arr = url.split("/");
