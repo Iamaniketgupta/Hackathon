@@ -145,7 +145,7 @@ const RagSignin = ({ setRegisterTab }) => {
                         </div>
                         <button
                         typeof='submit'
-                            className='bg-blue-500 hover:bg-blue-400 font-semibold px-4 py-2 rounded   w-[95%] block mx-auto text-white flex items-center justify-center'
+                            className='bg-blue-500 hover:bg-blue-400 font-semibold px-4 py-2 rounded   w-[95%] mx-auto text-white flex items-center justify-center'
                         >
                             {loading ? (
                                 <svg className="animate-spin h-5 w-5 mr-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

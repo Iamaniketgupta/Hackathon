@@ -161,10 +161,28 @@ const updateProfilePicture = asyncHandler(async (req, res) => {
     res.status(200).json(new ApiResponse(200, user, 'Profile picture updated successfully'));
 });
 
+// Update coordinates for the authenticated User
+const updateCoordinates = asyncHandler(async (req, res) => {
+    const { lat, long } = req.body;
+
+    if (lat == null || long == null) {
+        throw new ApiError(400, "Latitude and longitude are required");
+    }
+
+    const user = req.user;
+
+    user.lat = lat;
+    user.long = long;
+    await user.save();
+
+    res.status(200).json(new ApiResponse(200, user, "Coordinates updated successfully"));
+});
+
 export {
     initiateRegister,
     login,
     verifyOtp,
     getUserById,
     updateProfilePicture,
+    updateCoordinates
 };

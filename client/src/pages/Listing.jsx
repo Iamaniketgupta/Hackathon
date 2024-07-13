@@ -9,9 +9,9 @@ function Listing() {
         <>
             <Background>
               <Navbar />
-                <section className='min-h-screen flex flex-col mt-20'>
+                <section className='min-h-screen min-w-screen flex flex-col justify-center items-center mt-20'>
                     <h1 className='text-2xl md:text-4xl font-bold tracking-tight text-white text-center mb-10'>Book Your RagPickers 🧹</h1>
-                    <div className="Sort mb-10">
+                    <div className="Sort mb-10 w-full">
                         <form class="max-w-sm">
                             <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">                        
                                 <h2 className='text-xl w-full font-bold'>Sort By</h2>                            
@@ -25,7 +25,7 @@ function Listing() {
                             </select>
                         </form>
                     </div>
-                    <div className="grid md:grid-cols-3 gap-10  min-h-screen">
+                    <div className=" flex flex-col md:grid md:grid-cols-3 gap-10 min-w-screen items-center justify-center  min-h-screen w-full">
                        <RagCard/>
                        <RagCard/>
                        <RagCard/>
