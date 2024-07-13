@@ -9,6 +9,7 @@ import RagpickerDashboard from './pages/RagpickerDashboard.jsx'
 import Dashboard from './components/ragpickerDashboard/Dashboard.jsx';
 import RagPickerProfile from './components/ragPickerProfilePage/RagPickerProfile.jsx';
 import AllJobs from './components/ragpickerDashboard/AllJobs.jsx';
+import Settings from './components/ragpickerSettingsPage/Setting.jsx';
 
 const router = createBrowserRouter(
     createRoutesFromChildren(
@@ -18,6 +19,7 @@ const router = createBrowserRouter(
                 <Route path='' element={<Dashboard/>} />
                 <Route path='/ragpicker/dashboard/profile' element={<RagPickerProfile/>}  />
                 <Route path='/ragpicker/dashboard/earning' element={<AllJobs/>} />
+                <Route path='/ragpicker/dashboard/settings' element={<Settings/>} />
             </Route>
         </Route>
     )
