@@ -42,9 +42,9 @@ const RagLogin = ({ setRegisterTab }) => {
     };
 
     return (
-        <div className='py-4 '>
+        <div className='py-4 text-gray-800'>
             <h1 className='text-center text-2xl mb-10 text-gray-800'>Welcome back Eco Warrior</h1>
-            <form className='mx-5' onSubmit={handleSubmit}>
+            <form className='mx-5 ' onSubmit={handleSubmit}>
                 <div className='w-full flex flex-col gap-2 my-4'>
                     <label htmlFor="identifier" className='px-2'>
                         Username or Email <span className='text-red-500'>*</span>
