@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 function RagCard({ name, charges, rating, distance }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  useEffect(() => {
-    window.onclick = () => {
-      isMobileMenuOpen(false);
-    };
-  }, []);
+  // useEffect(() => {
+  //   window.onclick = () => {
+  //     isMobileMenuOpen(false);
+  //   };
+  // }, []);
 
 
   return (
