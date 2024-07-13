@@ -17,9 +17,11 @@ app.use(express.static(path.join(process.cwd(), 'public')));
 import userRouter from "./routes/user.router.js";
 import ragpickerRouter from './routes/ragpicker.router.js';
 import bookingRouter from './routes/booking.router.js'
+import ratingRouter from './routes/rating.router.js'
 
 app.use("/user", userRouter);
 app.use("/rp", ragpickerRouter);
 app.use("/booking" , bookingRouter)
+app.use("/rating" , ratingRouter)
 
 export default app;
