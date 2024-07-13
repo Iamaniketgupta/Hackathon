@@ -1,4 +1,5 @@
 import React from 'react'
+import ragpicker from '../assets/ragpicker.png';
 
 function Steps() {
     return (
@@ -7,7 +8,7 @@ function Steps() {
                 <div className="relative">
                     <img
                         className="inset-0 w-full rounded-3xl shadow-lg h-96 lg:absolute lg:h-full"
-                        src="https://cdna.artstation.com/p/assets/images/images/014/813/486/large/kailas-matur-rag-picker-1.jpg?1545654474"
+                        src={ragpicker}
                         alt="Rag Picker"
                     />
                 </div>

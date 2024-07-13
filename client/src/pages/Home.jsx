@@ -6,13 +6,11 @@ import Hero from '../components/Hero';
 import ShuffleHero from '../components/Shuffle';
 import FAQ from '../components/FAQ';
 import Steps from '../components/Steps';
-function Home({ children }) {
+function Home() {   
     return (
         <>
             <Background>
-                <header className="fixed inset-x-0 top-0 z-50">
-                    <Navbar />
-                </header>
+                <Navbar />
                 <Hero />
                 <Steps/>
                 <ShuffleHero />

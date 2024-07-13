@@ -1,4 +1,5 @@
 import React from 'react'
+import ragpicker from '../assets/ragpicker.png';
 
 function Footer() {
   return (
@@ -8,8 +9,8 @@ function Footer() {
       <div className="mb-6 md:mb-0">
         <span className="flex">
           <img
-            src="https://cdna.artstation.com/p/assets/images/images/014/813/486/large/kailas-matur-rag-picker-1.jpg?1545654474"
-            className="h-32 me-3"
+            src={ragpicker}
+            className="h-40 me-3"
             alt="RagPicker Logo"
           />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
