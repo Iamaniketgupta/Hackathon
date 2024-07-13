@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createBooking, acceptBooking, getUnacceptedBookings } from '../controllers/booking.controller.js';
+import { createBooking, acceptBooking, getUnacceptedBookings, payForBooking } from '../controllers/booking.controller.js';
 import { verifyJwt } from '../middlewares/auth.middleware.js'; // Use verifyJwt for user authentication
 import { verifyRagPickerJwt } from '../middlewares/authRagpicker.middleware.js'; // Use verifyRagPickerJwt for RagPicker authentication
 
