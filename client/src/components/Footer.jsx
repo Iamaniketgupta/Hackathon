@@ -10,7 +10,7 @@ function Footer() {
           <img
             src="https://cdna.artstation.com/p/assets/images/images/014/813/486/large/kailas-matur-rag-picker-1.jpg?1545654474"
             className="h-32 me-3"
-            alt="FlowBite Logo"
+            alt="RagPicker Logo"
           />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
             RagPickers
@@ -24,12 +24,12 @@ function Footer() {
           </h2>
           <ul className="text-gray-500 dark:text-gray-400 font-medium">
             <li className="mb-4">
-              <a href="https://flowbite.com/" className="hover:underline">
-                Flowbite
+              <a href="#" className="hover:underline">
+                RagPickers
               </a>
             </li>
             <li>
-              <a href="https://tailwindcss.com/" className="hover:underline">
+              <a href="#" className="hover:underline">
                 Tailwind CSS
               </a>
             </li>
@@ -42,7 +42,7 @@ function Footer() {
           <ul className="text-gray-500 dark:text-gray-400 font-medium">
             <li className="mb-4">
               <a
-                href="https://github.com/themesberg/flowbite"
+                href="#"
                 className="hover:underline "
               >
                 Github
@@ -50,7 +50,7 @@ function Footer() {
             </li>
             <li>
               <a
-                href="https://discord.gg/4eeurUVvTy"
+                href="#"
                 className="hover:underline"
               >
                 Discord
@@ -81,7 +81,7 @@ function Footer() {
     <div className="sm:flex sm:items-center sm:justify-between">
       <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
         © 2024{" "}
-        <a href="https://flowbite.com/" className="hover:underline">
+        <a href="#" className="hover:underline">
           RagPickers™
         </a>
         . All Rights Reserved.

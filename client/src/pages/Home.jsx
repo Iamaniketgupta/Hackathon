@@ -14,8 +14,8 @@ function Home({ children }) {
                     <Navbar />
                 </header>
                 <Hero />
-                <ShuffleHero />
                 <Steps/>
+                <ShuffleHero />
                 <FAQ/>
             </Background>
             <Footer />
