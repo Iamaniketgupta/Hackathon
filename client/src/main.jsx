@@ -13,6 +13,8 @@ import RagPickerProfile from './components/ragPickerProfilePage/RagPickerProfile
 import AllJobs from './components/ragpickerDashboard/AllJobs.jsx';
 import Settings from './components/ragpickerSettingsPage/Setting.jsx';
 import Profile from './pages/Profile.jsx';
+import RagAuth from './Auth/RagAuth.jsx'
+import UserAuth from './Auth/UserAuth.jsx'
 
 const router = createBrowserRouter(
     createRoutesFromChildren(
