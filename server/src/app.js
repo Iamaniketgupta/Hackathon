@@ -9,4 +9,9 @@ app.use(cors({
 app.use(express.json());
 
 
+// Routes
+import userRouter from "./routes/user.router.js"
+app.use("/user" , userRouter);
+
+
 export default app;
