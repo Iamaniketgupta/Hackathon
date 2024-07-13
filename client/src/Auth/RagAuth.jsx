@@ -5,7 +5,6 @@ import Background from '../components/Background'
 
 const SignUp = () => {
     const [RegisterTab, setRegisterTab] = useState(true);
-
     return (
         <Background>
             <div className=' overflow-hidden '>

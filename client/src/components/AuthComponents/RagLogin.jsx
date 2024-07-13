@@ -46,7 +46,7 @@ const RagLogin = ({ setRegisterTab }) => {
             <h1 className='text-center text-2xl mb-10 text-gray-800'>Welcome back Eco Warrior</h1>
             <form className='mx-5' onSubmit={handleSubmit}>
                 <div className='w-full flex flex-col gap-2 my-4'>
-                    <label htmlFor="identifier" className='px-2'>
+                    <label htmlFor="identifier" className='px-2 text-black'>
                         Username or Email <span className='text-red-500'>*</span>
                     </label>
                     <input
@@ -62,7 +62,7 @@ const RagLogin = ({ setRegisterTab }) => {
                     />
                 </div>
                 <div className='w-full flex flex-col gap-2 my-4'>
-                    <label htmlFor="password" className='px-2'>
+                    <label htmlFor="password" className='px-2 text-black'>
                         Password <span className='text-red-500'>*</span>
                     </label>
                     <input

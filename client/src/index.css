@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+  scroll-behavior: smooth;
+}
 .marker-start {
     background-color: red; /* Color for 'You' marker */
     width: 20px;

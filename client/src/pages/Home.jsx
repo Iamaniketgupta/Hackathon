@@ -12,6 +12,7 @@ function Home() {
             <Background>
                 <Navbar />
                 <Hero />
+                <a name="steps"></a>
                 <Steps/>
                 <ShuffleHero />
                 <FAQ/>
