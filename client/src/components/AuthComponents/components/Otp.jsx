@@ -55,6 +55,7 @@ const Otp = ({ setOtpSent, requestapi, formData }) => {
     };
 
     return (
+        <div className=" text-gray-800 max-w-md mx-auto p-5">
         <div className="max-w-md mx-auto p-5 text-black">
             <div className="font-semibold text-3xl text-center mb-8">
                 <p>Email Verification</p>
