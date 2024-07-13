@@ -118,7 +118,7 @@ const login = asyncHandler(async (req, res) => {
 });
 
 // Get the authenticated RagPicker
-const getRagPickerById = asyncHandler(async (req, res) => {
+const getRagPicker = asyncHandler(async (req, res) => {
     const ragPicker = req.ragPicker;
 
     res.status(200).json(new ApiResponse(200, ragPicker, "Rag Picker retrieved successfully"));
@@ -136,7 +136,6 @@ const updateRagPicker = asyncHandler(async (req, res) => {
     res.status(200).json(new ApiResponse(200, ragPicker, "Rag Picker updated successfully"));
 });
 
-// Update Profile Picture
 const updateProfilePicture = asyncHandler(async (req, res) => {
     const file = req.file;
 
@@ -146,21 +145,25 @@ const updateProfilePicture = asyncHandler(async (req, res) => {
 
     const ragPicker = req.ragPicker;
 
+    // Delete the existing profile picture from Cloudinary if it exists
     if (ragPicker.pfp) {
         const existingPublicId = await publicId(ragPicker.pfp);
         await deleteFromCloudinary(existingPublicId);
     }
 
+    // Upload the new profile picture to Cloudinary
     const uploadResponse = await uploadToCloudinary(file.path);
     if (!uploadResponse) {
         throw new ApiError(500, 'Failed to upload image');
     }
 
+    // Update the ragPicker profile picture URL
     ragPicker.pfp = uploadResponse.secure_url;
     await ragPicker.save();
 
     res.status(200).json(new ApiResponse(200, ragPicker, 'Profile picture updated successfully'));
 });
+
 
 // Delete the authenticated RagPicker
 const deleteRagPicker = asyncHandler(async (req, res) => {
@@ -218,6 +221,66 @@ const verifyRagPickerJwt = asyncHandler(async (req, res, next) => {
     }
 });
 
+
+const getRagPickerById = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+
+    // Check if the ID is provided
+    if (!id) {
+        throw new ApiError(400, "Rag Picker ID is required");
+    }
+
+    // Fetch the RagPicker from the database
+    const ragPicker = await RagPicker.findById(id).select("-password");
+
+    // If RagPicker not found, throw an error
+    if (!ragPicker) {
+        throw new ApiError(404, "Rag Picker not found");
+    }
+
+    // Send the response with the RagPicker data
+    res.status(200).json(new ApiResponse(200, ragPicker, "Rag Picker retrieved successfully"));
+});
+
+// Update coordinates for the authenticated RagPicker
+const updateCoordinates = asyncHandler(async (req, res) => {
+    const { lat, long } = req.body;
+
+    if (lat == null || long == null) {
+        throw new ApiError(400, "Latitude and longitude are required");
+    }
+
+    const ragPicker = req.ragPicker;
+
+    ragPicker.lat = lat;
+    ragPicker.long = long;
+    await ragPicker.save();
+
+    res.status(200).json(new ApiResponse(200, ragPicker, "Coordinates updated successfully"));
+});
+
+// Get RagPicker by Username
+const getRagPickerByUsername = asyncHandler(async (req, res) => {
+    const { username } = req.params;
+
+    // Check if the username is provided
+    if (!username) {
+        throw new ApiError(400, "Username is required");
+    }
+
+    // Fetch the RagPicker from the database by username
+    const ragPicker = await RagPicker.findOne({ username }).select("-password");
+
+    // If RagPicker not found, throw an error
+    if (!ragPicker) {
+        throw new ApiError(404, "Rag Picker not found");
+    }
+
+    // Send the response with the RagPicker data
+    res.status(200).json(new ApiResponse(200, ragPicker, "Rag Picker retrieved successfully"));
+});
+
+
 export {
     initiateRagPickerRegistration,
     verifyRagPickerOTP,
@@ -227,5 +290,8 @@ export {
     deleteRagPicker,
     addReview,
     login,
-    verifyRagPickerJwt
+    verifyRagPickerJwt,
+    getRagPicker,
+    updateCoordinates ,
+    getRagPickerByUsername// Add the new controller to the exports
 };
