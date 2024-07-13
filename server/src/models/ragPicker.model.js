@@ -21,30 +21,29 @@ const ragPickerSchema = new mongoose.Schema({
   },
   age: {
     type: Number,
-    required: true
   },
   pfp: {
     type: String // URL to the profile picture
   },
   address: {
     type: String,
-    required: true
+    
   },
   lat: {
     type: Number,
-    required: true
+    
   },
   long: {
     type: Number,
-    required: true
+    
   },
   gender: {
     type: String,
-    required: true
+    
   },
   pricePerHour: {
     type: Number,
-    required: true
+    
   },
   reviews: [reviewSchema],
   ratings: {

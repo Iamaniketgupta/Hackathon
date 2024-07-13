@@ -19,7 +19,7 @@ import ragpickerRouter from './routes/ragpicker.router.js';
 import bookingRouter from './routes/booking.router.js'
 
 app.use("/user", userRouter);
-app.use("/ragpicker", ragpickerRouter);
+app.use("/rp", ragpickerRouter);
 app.use("/booking" , bookingRouter)
 
 export default app;

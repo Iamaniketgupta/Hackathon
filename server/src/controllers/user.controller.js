@@ -34,7 +34,7 @@ const transporter = nodemailer.createTransport({
 const initiateRegister = asyncHandler(async (req, res) => {
     const { username, email, password, name, age, lat, long, address, gender } = req.body;
 
-    if (!username || !email || !password || !name || !age || !lat || !long || !address || !gender) {
+    if (!username || !email || !password || !name ) {
         throw new ApiError(400, "All fields are required");
     }
 

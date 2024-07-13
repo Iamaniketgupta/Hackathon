@@ -9,7 +9,7 @@ const router = Router();
 router.route("/book").post(verifyJwt, createBooking); // Create a booking
 router.route("/accept").post(verifyRagPickerJwt, acceptBooking); // RagPicker accepts a booking
 router.route("/unaccepted").get(verifyRagPickerJwt, getUnacceptedBookings); // RagPicker gets all unaccepted bookings
-router.route("/pay").post(verifyRagPickerJwt, payForBooking); // Mark a booking as paid
+// router.route("/pay").post(verifyRagPickerJwt, payForBooking); // Mark a booking as paid
 
 
 export default router;
