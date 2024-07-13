@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { MapContainer, TileLayer, Polyline, Marker, Popup } from 'react-leaflet';
+=======
+import { MapContainer, TileLayer, Polyline, Marker, Popup,Tooltip } from 'react-leaflet';
+>>>>>>> 0eb91b73dba9fbff412b14e498dcf9daf0323eb2
 =======
 import { MapContainer, TileLayer, Polyline, Marker, Popup,Tooltip } from 'react-leaflet';
 >>>>>>> 0eb91b73dba9fbff412b14e498dcf9daf0323eb2
@@ -18,6 +22,7 @@ L.Icon.Default.mergeOptions({
 });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const MapComponent = ({ position2 }) => {
   const [position1, setPosition1] = useState(null);
   const polyline = position1 ? [position1, position2] : [];
@@ -26,12 +31,17 @@ const MapComponent = ({ position2 }) => {
   useEffect(() => {
     // Get current location
 =======
+=======
+>>>>>>> 0eb91b73dba9fbff412b14e498dcf9daf0323eb2
 
 const MapComponent = ({ position2=[30.94, 75.88644] }) => {
   const [position1, setPosition1] = useState(null);
   const polyline = position1 ? [position1, position2] : [];
   const [distance, setDistance] = useState(null);
   useEffect(() => {
+<<<<<<< HEAD
+>>>>>>> 0eb91b73dba9fbff412b14e498dcf9daf0323eb2
+=======
 >>>>>>> 0eb91b73dba9fbff412b14e498dcf9daf0323eb2
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -41,14 +51,20 @@ const MapComponent = ({ position2=[30.94, 75.88644] }) => {
       (error) => {
         console.error("Error getting location:", error);
 <<<<<<< HEAD
+<<<<<<< HEAD
         setPosition1([30.938368, 75.8864447]);
       }
     );
 =======
+=======
+>>>>>>> 0eb91b73dba9fbff412b14e498dcf9daf0323eb2
         setPosition1([33.938368, 75.8864447]);
       }
     );
     console.log(position1);
+<<<<<<< HEAD
+>>>>>>> 0eb91b73dba9fbff412b14e498dcf9daf0323eb2
+=======
 >>>>>>> 0eb91b73dba9fbff412b14e498dcf9daf0323eb2
   }, []);
 
@@ -78,6 +94,7 @@ const MapComponent = ({ position2=[30.94, 75.88644] }) => {
             </div>
           )}
 <<<<<<< HEAD
+<<<<<<< HEAD
           <MapContainer center={position1} zoom={15} className='w-full h-[300px] mt-10'>
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -94,6 +111,8 @@ const MapComponent = ({ position2=[30.94, 75.88644] }) => {
             </Marker>
             <Polyline positions={polyline} color="blue" />
 =======
+=======
+>>>>>>> 0eb91b73dba9fbff412b14e498dcf9daf0323eb2
           <MapContainer center={position1} zoom={16} className='w-full h-[400px] mt-10'>
             <TileLayer
               url="http://mt1.google.com/vt?lyrs=m&x={x}&y={y}&z={z}"
@@ -109,6 +128,9 @@ const MapComponent = ({ position2=[30.94, 75.88644] }) => {
            </Tooltip>
             </Marker>
             <Polyline positions={polyline} color="#0f53ff" />
+<<<<<<< HEAD
+>>>>>>> 0eb91b73dba9fbff412b14e498dcf9daf0323eb2
+=======
 >>>>>>> 0eb91b73dba9fbff412b14e498dcf9daf0323eb2
           </MapContainer>
          
@@ -119,10 +141,13 @@ const MapComponent = ({ position2=[30.94, 75.88644] }) => {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Default props for position2
 MapComponent.defaultProps = {
   position2: [30.938383, 75.88644],
 };
+=======
+>>>>>>> 0eb91b73dba9fbff412b14e498dcf9daf0323eb2
 =======
 >>>>>>> 0eb91b73dba9fbff412b14e498dcf9daf0323eb2
 

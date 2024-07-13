@@ -12,12 +12,9 @@ function RagCard({ name, charges, rating, distance }) {
 
 
   return (
-<<<<<<< HEAD
+
     <div className="w-full block h-min max-w-sm rounded-2xl backdrop-blur-xl bg-white/5  focus:ring-gray-200 border-2 border-white/20 shadow-2xl  hover:bg-white/10 " onClick={() => { setIsMobileMenuOpen(false) }}
-=======
-    <div className="w-full block h-min rounded-2xl backdrop-blur-xl bg-white/5  focus:ring-gray-200 border-2 border-white/20 shadow-2xl  hover:bg-white/10 " onClick={() => { setIsMobileMenuOpen(false) }}
->>>>>>> 0eb91b73dba9fbff412b14e498dcf9daf0323eb2
-    >
+>
       <div className="flex justify-end px-2 pt-2">
         <button
           id="dropdownButton"
