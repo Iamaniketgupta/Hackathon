@@ -13,11 +13,15 @@ import RagPickerProfile from './components/ragPickerProfilePage/RagPickerProfile
 import AllJobs from './components/ragpickerDashboard/AllJobs.jsx';
 import Settings from './components/ragpickerSettingsPage/Setting.jsx';
 import Profile from './pages/Profile.jsx';
+import RagAuth from './Auth/RagAuth.jsx'
+import UserAuth from './Auth/UserAuth.jsx'
 
 const router = createBrowserRouter(
     createRoutesFromChildren(
         <Route path="/" element={<App />}>
             <Route path="" element={<Home />} />
+            <Route path="/rp/signin" element={<RagAuth />} />
+            <Route path="/user/signin" element={<UserAuth />} />
             <Route path='/ragpicker/dashboard' element={<RagpickerDashboard/>}>
                 <Route path='' element={<Dashboard/>} />
                 <Route path='/ragpicker/dashboard/profile' element={<RagPickerProfile/>}  />
@@ -28,9 +32,11 @@ const router = createBrowserRouter(
             <Route path="/book" element={<Listing />} />
             <Route path="/:username" element={<Profile />} />
         </Route>
+
+
     )
 )
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <RouterProvider router={router}/>
+        <RouterProvider router={router} />
 )
