@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { FaCamera } from "react-icons/fa";
+import axios from 'axios'
+import { BACKEND_URL } from "../../constants";
+import axiosInstance from "../../axiosConfig/axiosConfig";
 
 const Settings = () => {
   const [userImage, setUserImage] = useState("path/to/default/image.jpg");
@@ -18,6 +21,24 @@ const Settings = () => {
       reader.readAsDataURL(file);
     }
   };
+
+  const handleSubmit = async()=>{
+    try {
+        if(!name || !address || !age || !pricePerHour ){
+          console.log("all fields are required")
+          return;
+        }
+        const response = await axiosInstance.put("/ragpicker/update" , {
+          name,
+          address,
+          age,
+          pricePerHour
+        });
+        console.log("response : " , response)
+    } catch (error) {
+        console.log("Error while  submit : " , error)
+    }
+  }
 
   return (
     <div className="mx-auto text-white">
@@ -88,6 +109,7 @@ const Settings = () => {
           <button
             type="submit"
             className="mt-4 p-2 rounded bg-blue-600 hover:bg-blue-700 text-white font-semibold"
+            onClick={handleSubmit}
           >
             Update Profile
           </button>
