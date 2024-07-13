@@ -5,6 +5,9 @@
 *{
   scroll-behavior: smooth;
 }
+.leaflet-marker-icon:nth-child(2){
+  filter: hue-rotate(120deg);
+}
 .marker-start {
     background-color: red; /* Color for 'You' marker */
     width: 20px;
