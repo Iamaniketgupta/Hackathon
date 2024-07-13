@@ -103,7 +103,7 @@ function Sidebar() {
                             </li>
                             <li>
                                 <Link
-                                    to="#"
+                                    to="/ragpicker/dashboard/settings"
                                     className="block py-2 px-3 text-white hover:bg-black/30 rounded"
                                 >
                                     Settings
