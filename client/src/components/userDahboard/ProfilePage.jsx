@@ -1,36 +1,71 @@
 import React from "react";
-import OngoingJob from "../ragpickerDashboard/OngoingJob";
+import { useSelector } from "react-redux";
+import { FaLocationDot } from "react-icons/fa6";
+import LiveMap from "../../Maps/LiveMap";
 
-const UserProfile = ({ 
-  userImage = "path/to/default/image.jpg", 
-  userName = "John Doe", 
-  userUsername = "john_doe", 
-  userEmail = "john@example.com" 
-}) => {
+const UserProfile = () => {
+  const user = useSelector((state) => state.auth?.user);
+  console.log(user);
+
   return (
-    <div className="p-4 mx-auto  flex w-[90%] md:w-[75%] flex-col md:flex-row  gap-7 md:justify-around bg-white/10 backdrop-blur-md rounded-lg shadow-lg text-white">
-      <div className="flex flex-col md:w-[40%] gap-6 backdrop-blur-md border border-white/20 rounded-lg p-4">
-        {/* Profile Picture Section */}
-        <div className="flex-shrink-0">
-          <img
-            src={userImage}
-            alt={userName}
-            className="w-24 h-24 rounded-full border-2 border-blue-500 shadow-md"
-          />
+    <div className="lg:p-10 py-5 mx-auto flex flex-col  lg:grid lg:grid-cols-2 w-full bg-white lg:gap-10 gap-5 bg-white/10 backdrop-blur-md rounded-lg shadow-lg text-white">
+      <div>
+        <div className="flex  flex-wrap justify-betwee   gap-6 rounded-lg p-5">
+          {/* Profile Picture Section */}
+          <div className="flex-shrink-0">
+            <img
+              src={user?.avatar}
+              alt={user?.name}
+              className="w-24 h-24 rounded-full border-2 border-blue-500 shadow-md"
+            />
+          </div>
+
+          {/* User Information Section */}
+          <div className="text-center lg:text-left">
+            <p className="text-2xl font-bold">{user?.name}</p>
+            <p className="text-sm text-gray-200">@{user?.username}</p>
+            <p className="text-sm text-gray-200">{user?.email}</p>
+            <p className="text-gray-200 flex items-center justify-center lg:justify-start gap-2">
+              <FaLocationDot className="text-blue-500" />
+              {user?.city}, {user?.state}
+            </p>
+          </div>
         </div>
 
-        {/* User Information Section */}
-        <div className="flex flex-col">
-          <p className="text-2xl font-semibold">{userName}</p>
-          <p className="text-sm text-gray-300">@{userUsername}</p>
-          <p className="text-sm text-gray-300">{userEmail}</p>
+
+        {/* ongoing */}
+
+        <div className="bg-white/10 relative rounded-lg shadow-lg p-2 my-10">
+          <div className="h-2 w-2 absolute top-0 left-0 bg-green-500 animate-ping rounded-full"></div>
+
+          <div className=" flex items-center gap-4 ">
+            <img src="" alt="" className="w-14 h-14 rounded-full ring shadow" />
+
+            <div>
+              <h3 className="text-blue-500 text-xl ">
+                Raju Bhai
+              </h3>
+              <p className="text-sm text-gray-200">@{user?.username}</p>
+              <p className="text-sm text-gray-200">{user?.email}</p>
+            </div>
+
+          </div>
+
+          <div className="text-white" >
+            <p>Booked for - 4 hr </p>
+            <p> from : 2 am - 7pm</p>
+
+          </div>
+          
+
+
         </div>
 
-        Ongoing job
-        <OngoingJob/>
+
       </div>
-      <div className="my-7 w-[98%] md:w-[500px] backdrop-blur-md border border-white/20 rounded-lg p-4" >
-        map
+
+      <div className="w-full h-[400px] rounded-xl border">
+        <LiveMap />
       </div>
     </div>
   );
