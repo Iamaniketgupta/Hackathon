@@ -267,7 +267,7 @@ const RagSignin = ({ setRegisterTab }) => {
                 </>
             ) : (
 
-                <Otp formData={formData} requestapi={requestapi} setOtpSent={setOtpSent} />
+                <Otp formData={formData} requestapi={requestapi} setOtpSent={setOtpSent} type={"ragpicker"} />
             )}
         </div>
     );
