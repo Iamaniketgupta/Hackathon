@@ -1,5 +1,6 @@
 import React from "react";
 import OngoingJob from "../ragpickerDashboard/OngoingJob";
+import LiveMap from "../../Maps/LiveMap";
 
 const RagPickerProfile = ({ 
   userImage = "path/to/default/image.jpg", 
@@ -8,8 +9,8 @@ const RagPickerProfile = ({
   userEmail = "john@example.com" 
 }) => {
   return (
-    <div className="p-4 mx-auto  flex w-[90%] md:w-[75%] flex-col md:flex-row  gap-7 md:justify-around bg-white/10 backdrop-blur-md rounded-lg shadow-lg text-white">
-      <div className="flex flex-col md:w-[40%] gap-6 backdrop-blur-md border border-white/20 rounded-lg p-4">
+    <div className="p-4 mx-auto  flex w-[90%] md:w-[75%] flex-col md:flex-row   md:justify-around bg-white/10 backdrop-blur-md rounded-lg shadow-lg text-white">
+      <div className="flex md:w-[40%] gap-6  rounded-lg p-4">
         {/* Profile Picture Section */}
         <div className="flex-shrink-0">
           <img
@@ -26,11 +27,9 @@ const RagPickerProfile = ({
           <p className="text-sm text-gray-300">{userEmail}</p>
         </div>
 
-        Ongoing job
-        <OngoingJob/>
       </div>
-      <div className="my-7 w-[98%] md:w-[500px] backdrop-blur-md border border-white/20 rounded-lg p-4" >
-        map
+      <div className="max-sm:my-7 w-[98%] md:w-[500px] h-[400px] rounded-lg " >
+        <LiveMap/>
       </div>
     </div>
   );

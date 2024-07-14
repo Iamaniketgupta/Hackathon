@@ -35,7 +35,7 @@ const MapComponent = ({ position2=[30.94, 75.88644] }) => {
   useEffect(() => {
     if (position1 && position2) {
       const dist = getDistance(
-        { latitude: position1[0], longitude: position1[1] },
+        { latitude:  position1[0], longitude: position1[1] },
         { latitude: position2[0], longitude: position2[1] }
       );
       setDistance(dist);
@@ -57,7 +57,7 @@ const MapComponent = ({ position2=[30.94, 75.88644] }) => {
               <h2>Distance: {formattedDistance} away</h2>
             </div>
           )}
-          <MapContainer center={position1} zoom={16} className='w-full h-[400px] mt-10'>
+          <MapContainer center={position1} zoom={8} className='w-full h-[400px] mt-10'>
             <TileLayer
               url="http://mt1.google.com/vt?lyrs=m&x={x}&y={y}&z={z}"
             />

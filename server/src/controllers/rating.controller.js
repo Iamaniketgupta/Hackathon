@@ -1,7 +1,7 @@
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import Rating from '../models/rating.model.js';
-import RagPicker from '../models/ragPicker.model.js';
+import Rating from '../models/ratingSchema.js';
+import {RagPicker} from '../models/ragPicker.model.js';
 import asyncHandler from 'express-async-handler';
 
 // Get all ratings of a RagPicker by username
