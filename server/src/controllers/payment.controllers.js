@@ -28,11 +28,13 @@ const createOrder = asyncHandler(async (req, res) => {
         key_secret
     }
     )
-    const amount=100*hours;
+    const per_hour=100;
+    const amount=per_hour*hours;
     const options={
         amount:Number.parseInt(amount)*100,
         currency:"INR",
     }
+
     const paymentInit = await instance.orders.create(options);
     const payment = await Payment.create({
         order_id: paymentInit.id,
