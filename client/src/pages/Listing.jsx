@@ -20,21 +20,21 @@ function Listing() {
     };
 
     useEffect(() => {
-        getAllRagPickerss()
-    }, [])
+        getAllRagPickerss();
+    }, []);
+
     const getAllRagPickerss = async () => {
         try {
-            setLoading(true)
-            const res = await axios.get(`${requestUrl}/users/rp/all`)
+            setLoading(true);
+            const res = await axios.get(`${requestUrl}/users/rp/all`);
             setAllRagPickers(res?.data?.ragpickers);
             console.log(res.data.ragpickers);
-            setLoading(false)
+            setLoading(false);
         } catch (error) {
-            toast.error('Something went wrong')
-            setLoading(false)
-
+            toast.error('Something went wrong');
+            setLoading(false);
         }
-    }
+    };
 
     return (
         <>
@@ -53,24 +53,10 @@ function Listing() {
                                 id="sortBy"
                                 className="w-full p-3 text-gray-300 bg-transparent border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                             >
-                                <option selected value="" className="bg-gray-900">Choose Sort By</option>
+                                <option value="" className="bg-gray-900">Choose Sort By</option>
                                 <option value="cost" className="bg-gray-900">Cost 💰</option>
                                 <option value="ratings" className="bg-gray-900">Ratings 🌟</option>
                                 <option value="distance" className="bg-gray-900">Distance 🚴‍♂️</option>
-              <Navbar />
-                <section className='min-h-screen min-w-screen flex flex-col justify-center items-center mt-20'>
-                    <h1 className='text-2xl md:text-4xl font-bold tracking-tight text-white text-center mb-10'>Book Your RagPickers 🧹</h1>
-                    <div className="Sort mb-10 w-full">
-                        <form className="max-w-sm">
-                            <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">                        
-                                <h2 className='text-xl w-full font-bold'>Sort By</h2>                            
-                            </label>
-                            <select id="countries" className="bg-transparent text-lg border border-white/50 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5   dark:placeholder-gray-400
-                            dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 font-bold">
-                                <option selected value={""} hidden className='bg-gray-900'>Choose Sort By</option>
-                                <option value="cost" className='bg-gray-900'>Cost 💰</option>
-                                <option value="ratings" className='bg-gray-900'>Ratings 🌟</option>
-                                <option value="distance" className='bg-gray-900'>Distance 🚴‍♂️</option>
                             </select>
                         </form>
                         <div className='flex items-center gap-3 text-2xl mt-5 md:mt-0'>
@@ -88,7 +74,6 @@ function Listing() {
                             {ragPickers?.map((item) =>
                                 <RagCard key={item._id} data={item} />
                             )}
-
                         </div>
                     ) : (
                         <div className="w-full h-[600px]">
