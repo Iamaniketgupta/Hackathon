@@ -11,39 +11,38 @@ const Settings = () => {
   const [city, setCity] = useState(user?.city || "");
   const [imageFile, setImageFile] = useState(null);
 
-  const handleImageChange = (e) => {
+
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      setImageFile(file);
-      const reader = new FileReader();
-      reader.onload = () => {
-        setUserImage(reader.result);
-      };
-      reader.readAsDataURL(file);
+      const formData = new FormData();
+      formData.append('profilePicture', file);
+
+      try {
+        const res = await axiosInstance.post('/user/profile-picture', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        console.log("Profile picture updated:", res.data);
+        setUserImage(res.data.updatedProfilePictureUrl); // Update based on your backend response
+      } catch (error) {
+        console.error("Error updating profile picture:", error);
+      }
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (!name || !state || !city || !imageFile) {
+      if (!name || !state || !city ) {
         console.log("All fields are required");
         return;
       }
 
-      const formData = new FormData();
-      formData.append("name", name);
-      formData.append("state", state);
-      formData.append("city", city);
-      formData.append("pfp", imageFile);
+      const res = await axiosInstance.post("/user/v/updateUserProfile" , {name, city , state})
 
-      const response = await axiosInstance.put("/ragpicker/update", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      console.log("response: ", response);
+      console.log("response: ", res);
     } catch (error) {
       console.log("Error while submitting: ", error);
     }
@@ -116,5 +115,7 @@ const Settings = () => {
     </div>
   );
 };
+
+
 
 export default Settings;

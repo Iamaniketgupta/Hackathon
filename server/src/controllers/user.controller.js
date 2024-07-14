@@ -202,6 +202,30 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 });
 
 
+// Update user profile
+const updateUserProfile = asyncHandler(async (req, res) => {
+    const { name, state, city } = req.body;
+    const userId = req.user._id;
+
+    try {
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { name, state, city },
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json(new ApiResponse(404, null, 'User not found'));
+        }
+
+        res.status(200).json(new ApiResponse(200, updatedUser, 'User updated successfully'));
+    } catch (error) {
+        res.status(500).json(new ApiResponse(500, null, 'Error updating user'));
+    }
+});
+
+
+
 export {
     initiateRegister,
     login,
@@ -209,5 +233,6 @@ export {
     getUserById,
     updateProfilePicture,
     updateCoordinates,
-    getCurrentUser
+    getCurrentUser,
+    updateUserProfile
 };

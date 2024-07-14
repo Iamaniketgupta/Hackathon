@@ -13,7 +13,6 @@ const bookingSchema = new mongoose.Schema({
   },
   timeSlot: {
     type: String,
-    required: true
   },
   payment: {
     type: Number,

@@ -92,8 +92,8 @@ function Listing() {
       <Background>
         <Navbar />
         <section className='min-h-screen text-white flex flex-col justify-center items-center mt-20'>
-          <h1 className='text-3xl md:text-4xl font-bold tracking-tight text-center mb-10'>
-            Book Your RagPickers
+          <h1 className='text-2xl md:text-4xl font-bold tracking-tight text-center mb-10'>
+            Book Your RagPickers 🧹
           </h1>
           <div className="px-5 gap-5 mb-10 w-full flex flex-col md:flex-row items-center justify-between">
             <form className="w-full md:max-w-md p-6 bg-white flex-grow bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg shadow-md">
@@ -110,6 +110,9 @@ function Listing() {
                 <option value="cost" className='bg-gray-900'>Cost 💰</option>
                 <option value="ratings" className='bg-gray-900'>Ratings 🌟</option>
                 <option value="distance" className='bg-gray-900'>Distance 🚴‍♂️</option>
+                <option value="cost">Cost 💰</option>
+                <option value="ratings">Ratings 🌟</option>
+                <option value="distance">Distance 🚴‍♂️</option>
               </select>
             </form>
             <div className='flex items-center gap-3 text-2xl mt-5 md:mt-0'>
