@@ -14,6 +14,7 @@ const RagSignin = ({ setRegisterTab }) => {
         email: '',
         password: '',
         lat:'',
+        pricePerHour:'',
         long:'',
         state:'',
         city:''
@@ -198,7 +199,7 @@ const RagSignin = ({ setRegisterTab }) => {
                                         id="price"
                                         required
                                         placeholder='Price /hr'
-                                        value={formData.price}
+                                        value={formData.pricePerHour}
                                         onChange={handleChange}
                                     />
                                     <div className='text-xs   bg-white h-full  font-semibold'>
