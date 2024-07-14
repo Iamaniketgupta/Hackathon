@@ -45,7 +45,7 @@ const acceptBooking = asyncHandler(async (req, res) => {
     const ragPickerId = req.ragPicker._id; // Assuming you have RagPicker authenticated and their info in req.ragPicker
 
     // Find the booking
-    const booking = await Booking.findById(bookingId);
+    const booking = await Booking.findById(bookingId).populate('user');
     if (!booking) {
         throw new ApiError(404, "Booking not found");
     }
@@ -68,7 +68,7 @@ const getUnacceptedBookings = asyncHandler(async (req, res) => {
     const ragPickerId = req.ragPicker._id; // Assuming you have RagPicker authenticated and their info in req.ragPicker
 
     // Find all unaccepted bookings for the authenticated RagPicker
-    const bookings = await Booking.find({ ragPicker: ragPickerId, isAccepted: false });
+    const bookings = await Booking.find({ ragPicker: ragPickerId, isAccepted: false }).populate("user");
 
     if (!bookings) {
         throw new ApiError(404, "No unaccepted bookings found");
@@ -168,6 +168,66 @@ const cancelBookingByRagPicker = asyncHandler(async (req, res) => {
     res.status(200).json(new ApiResponse(200, booking, "Booking canceled successfully"));
 });
 
+// Fetch all bookings of a ragpicker
+const getAllBookingsOfRagPicker = asyncHandler(async (req, res) => {
+    const { ragPickerId } = req.params;
+
+    // Check if the RagPicker exists
+    const ragPicker = await RagPicker.findById(ragPickerId);
+    if (!ragPicker) {
+        throw new ApiError(404, "Rag Picker not found");
+    }
+
+    // Find all bookings for the specified RagPicker
+    const bookings = await Booking.find({ ragPicker: ragPickerId });
+
+    if (!bookings) {
+        throw new ApiError(404, "No bookings found");
+    }
+
+    res.status(200).json(new ApiResponse(200, bookings, "Bookings retrieved successfully"));
+});
+
+// Fetch all completed bookings
+const getAllCompletedBookings = asyncHandler(async (req, res) => {
+    const { ragPickerId } = req.params;
+
+    // Check if the RagPicker exists
+    const ragPicker = await RagPicker.findById(ragPickerId);
+    if (!ragPicker) {
+        throw new ApiError(404, "Rag Picker not found");
+    }
+
+    // Find all completed bookings for the specified RagPicker
+    const bookings = await Booking.find({ ragPicker: ragPickerId, status: "completed" }).populate('user');
+
+    if (!bookings) {
+        throw new ApiError(404, "No completed bookings found");
+    }
+
+    res.status(200).json(new ApiResponse(200, bookings, "Completed bookings retrieved successfully"));
+});
+
+// Fetch total money earned by a RagPicker from paid bookings
+const getTotalMoneyEarned = asyncHandler(async (req, res) => {
+    const { ragPickerId } = req.params;
+
+    // Check if the RagPicker exists
+    const ragPicker = await RagPicker.findById(ragPickerId);
+    if (!ragPicker) {
+        throw new ApiError(404, "Rag Picker not found");
+    }
+
+    // Find all paid bookings for the RagPicker
+    const paidBookings = await Booking.find({ ragPicker: ragPickerId, isPaid: true });
+
+    // Calculate the total money earned
+    const totalMoney = paidBookings.reduce((sum, booking) => sum + booking.payment, 0);
+
+    res.status(200).json(new ApiResponse(200, { totalMoney }, "Total money earned retrieved successfully"));
+});
+
+
 export {
     createBooking,
     acceptBooking,
@@ -175,5 +235,8 @@ export {
     payForBooking,
     completeBookingByUser,
     cancelBookingByUser,
-    cancelBookingByRagPicker
+    cancelBookingByRagPicker,
+    getAllBookingsOfRagPicker,
+    getAllCompletedBookings,
+    getTotalMoneyEarned
 };

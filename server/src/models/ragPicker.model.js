@@ -23,7 +23,10 @@ const ragPickerSchema = new mongoose.Schema({
     type: Number,
   },
   pfp: {
-    type: String // URL to the profile picture
+    type: String ,
+    default:"https://res.cloudinary.com/surajgsn/image/upload/v1720951456/oab0ebxqz1qgnllamdvf.png"
+    
+    // URL to the profile picture
   },
   address: {
     type: String,
@@ -46,7 +49,8 @@ const ragPickerSchema = new mongoose.Schema({
   ratings: {
     type: Number,
     min: 0,
-    max: 5
+    max: 5,
+    default:0
   },
   username: {
     type: String,

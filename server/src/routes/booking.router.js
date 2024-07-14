@@ -6,7 +6,10 @@ import {
     payForBooking,
     completeBookingByUser,
     cancelBookingByUser,
-    cancelBookingByRagPicker
+    cancelBookingByRagPicker,
+    getAllBookingsOfRagPicker,
+    getAllCompletedBookings,
+    getTotalMoneyEarned
 } from '../controllers/booking.controller.js';
 import { verifyJwt } from '../middlewares/auth.middleware.js'; // Use verifyJwt for user authentication
 import { verifyRagPickerJwt } from '../middlewares/authRagpicker.middleware.js'; // Use verifyRagPickerJwt for RagPicker authentication
@@ -26,4 +29,7 @@ router.route("/cancel/user").post(verifyJwt, cancelBookingByUser); // User cance
 // RagPicker routes
 router.route("/cancel/ragpicker").post(verifyRagPickerJwt, cancelBookingByRagPicker); // RagPicker cancels a booking
 
+router.route("/getAllBookings/:ragPickerId").get(getAllBookingsOfRagPicker);
+router.route("/getAllCompletedBookings/:ragPickerId").get(getAllCompletedBookings)
+router.route("/getAllEarnedMoney/:ragPickerId").get(getTotalMoneyEarned);
 export default router;
