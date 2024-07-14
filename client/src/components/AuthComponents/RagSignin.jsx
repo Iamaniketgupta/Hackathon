@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { requestUrl } from '../../../constant';
 
 
-const requestapi= `${requestUrl}/rp`
+const requestapi = `${requestUrl}/rp`
 const RagSignin = ({ setRegisterTab }) => {
     const [formData, setFormData] = useState({
         name: '',
@@ -61,20 +61,20 @@ const RagSignin = ({ setRegisterTab }) => {
     };
 
     return (
-        <div className='text-gray-800 max-w-md mx-auto p-5'>
+        <div className='text-gray-800 max-w-xl mx-auto p-5'>
             {!otpsent ? (
                 <>
                     <h1 className='text-center text-2xl md:text-3xl mb-8 font-semibold text-gray-800'>Partner as Rag Picker</h1>
                     <form className='flex flex-col gap-3' onSubmit={handleSubmit}>
-                        <div className='flex gap-3 md:gap-4'>
-                            <div className='w-full md:w-1/2 space-y-2'>
-                                <label htmlFor="name" className='block text-sm px-2 font-medium text-gray-700'>
+                        <div className='flex gap-5 items-center justify-between '>
+                        <div className='space-y-2'>
+                        <label htmlFor="name" className='block text-sm px-2 font-medium text-gray-700'>
                                     Full Name <span className='text-red-500'>*</span>
                                 </label>
                                 <input
                                     type="text"
                                     autoComplete="off"
-                                    className='bg-gray-100 outline-none focus:ring-1 ring-blue-500 px-4 py-2 text-gray-900 rounded-full w-full'
+                                    className=' outline-none border-b  px-4 py-2 text-gray-900  w-full'
                                     name="name"
                                     id="name"
                                     required
@@ -83,14 +83,14 @@ const RagSignin = ({ setRegisterTab }) => {
                                     onChange={handleChange}
                                 />
                             </div>
-                            <div className='w-full md:w-1/2 space-y-2'>
+                            <div className='space-y-2'>
                                 <label htmlFor="username" className='block px-2 text-sm font-medium text-gray-700'>
                                     Username <span className='text-red-500'>*</span>
                                 </label>
                                 <input
                                     type="text"
                                     autoComplete="off"
-                                    className='bg-gray-100 outline-none focus:ring-1 ring-blue-500 px-4 py-2 text-gray-900 rounded-full w-full'
+                                    className=' outline-none border-b  px-4 py-2 text-gray-900  w-full'
                                     name="username"
                                     id="username"
                                     required
@@ -100,51 +100,118 @@ const RagSignin = ({ setRegisterTab }) => {
                                 />
                             </div>
                         </div>
-                        <div className='space-y-2'>
-                            <label htmlFor="email" className='block text-sm px-2 font-medium text-gray-700'>
-                                Email <span className='text-red-500'>*</span>
-                            </label>
-                            <input
-                                type="email"
-                                autoComplete="off"
-                                className='bg-gray-100 outline-none focus:ring-1 ring-blue-500 px-4 py-2 text-gray-900 rounded-full w-full'
-                                name="email"
-                                id="email"
-                                required
-                                placeholder='Email'
-                                value={formData.email}
-                                onChange={handleChange}
-                            />
+
+
+                        <div className='flex gap-5 justify-between md:gap-4'>
+
+                            <div className='space-y-2'>
+                                <label htmlFor="email" className='block text-sm px-2 font-medium text-gray-700'>
+                                    Email <span className='text-red-500'>*</span>
+                                </label>
+                                <input
+                                    type="email"
+                                    autoComplete="off"
+                                    className=' outline-none border-b  px-4 py-2 text-gray-900  w-full'
+                                    name="email"
+                                    id="email"
+                                    required
+                                    placeholder='Email'
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className='space-y-2 relative mb-4'>
+                                <label htmlFor="password" className='block text-sm px-2 font-medium text-gray-700'>
+                                    Password <span className='text-red-500'>*</span>
+                                </label>
+                                <input
+                                    type={showPassword ? 'text' : 'password'}
+                                    autoComplete="off"
+                                    className=' outline-none border-b  px-4 py-2 text-gray-900  w-full'
+                                    name="password"
+                                    id="password"
+                                    required
+                                    placeholder='Password'
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                />
+                                <button
+                                    type="button"
+                                    className='absolute inset-y-0 right-3 top-5 flex items-center px-3 text-gray-700'
+                                    onClick={togglePassVis}
+                                >
+                                    {showPassword ? (
+                                        <FaEye className='h-5 w-5' aria-hidden='true' />
+                                    ) : (
+                                        <FaRegEyeSlash className='h-5 w-5' aria-hidden='true' />
+                                    )}
+                                </button>
+                            </div>
                         </div>
-                        <div className='space-y-2 relative mb-4'>
-                            <label htmlFor="password" className='block text-sm px-2 font-medium text-gray-700'>
-                                Password <span className='text-red-500'>*</span>
-                            </label>
-                            <input
-                                type={showPassword ? 'text' : 'password'}
-                                autoComplete="off"
-                                className='bg-gray-100 outline-none focus:ring-1 ring-blue-500 px-4 py-2 text-gray-900 rounded-full w-full'
-                                name="password"
-                                id="password"
-                                required
-                                placeholder='Password'
-                                value={formData.password}
-                                onChange={handleChange}
-                            />
-                            <button
-                                type="button"
-                                className='absolute inset-y-0 right-3 top-5 flex items-center px-3 text-gray-700'
-                                onClick={togglePassVis}
-                            >
-                                {showPassword ? (
-                                    <FaEye className='h-5 w-5' aria-hidden='true' />
-                                ) : (
-                                    <FaRegEyeSlash className='h-5 w-5' aria-hidden='true' />
-                                )}
-                            </button>
+
+                        {/* city,state,price */}
+
+                        <div className='flex gap-5  md:gap-4'>
+
+                            <div className='w-full  md:w-1/2 relative space-y-2'>
+                                <label htmlFor="name" className='block text-sm px-2 font-medium text-gray-700'>
+                                    Price/hr <span className='text-red-500'>*</span>
+                                </label>
+                                <div className='flex items-center'>
+
+                                    <input
+                                        type="number"
+                                        autoComplete="off"
+                                        className=' outline-none  px-4 py-2 text-gray-900 rounded-full w-full'
+                                        name="price"
+                                        min={50}
+                                        id="price"
+                                        required
+                                        placeholder='Price /hr'
+                                        value={formData.price}
+                                        onChange={handleChange}
+                                    />
+                                    <div className='text-xs   bg-white h-full  font-semibold'>
+                                        /hour
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className='w-full md:w-1/2 space-y-2'>
+                                <label htmlFor="username" className='block px-2 text-xs font-medium text-gray-700'>
+                                    City <span className='text-red-500'>*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    autoComplete="off"
+                                    className='border-b outline-none focus:ring-1 ring-blue-500 px-4 py-2 text-gray-900 w-full'
+                                    name="city"
+                                    id="city"
+                                    required
+                                    placeholder='City'
+                                    value={formData.city}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className='w-full md:w-1/2 space-y-2'>
+                                <label htmlFor="username" className='block px-2 text-xs font-medium text-gray-700'>
+                                    State <span className='text-red-500'>*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    autoComplete="off"
+                                    className='border-b outline-none focus:ring-1 ring-blue-500 px-4 py-2 text-gray-900 w-full'
+                                    name="state"
+                                    id="state"
+                                    required
+                                    placeholder='State'
+                                    value={formData.state}
+                                    onChange={handleChange}
+                                />
+                            </div>
                         </div>
                         <button
-                        typeof='submit'
+                            typeof='submit'
                             className='bg-blue-500 hover:bg-blue-400 font-semibold px-4 py-2 rounded   w-[95%] mx-auto text-white flex items-center justify-center'
                         >
                             {loading ? (
@@ -168,6 +235,7 @@ const RagSignin = ({ setRegisterTab }) => {
                     </form>
                 </>
             ) : (
+
                 <Otp formData={formData} requestapi={requestapi} setOtpSent={setOtpSent} />
             )}
         </div>
