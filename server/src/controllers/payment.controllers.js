@@ -28,7 +28,9 @@ const createOrder = asyncHandler(async (req, res) => {
         key_secret
     }
     )
-    const per_hour=100;
+
+
+    const per_hour=ragPicker.pricePerHour;
     const amount=per_hour*hours;
     const options={
         amount:Number.parseInt(amount)*100,
@@ -47,14 +49,19 @@ const createOrder = asyncHandler(async (req, res) => {
 })
 
 const verifyOrder = asyncHandler(async (req, res) => {
+    
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+    
     if (!razorpay_order_id) {
         throw new ApiError(400, "Order ID is required");
     }
+    
     const payment = await Payment.findOne({ order_id: razorpay_order_id });
+    
     if (!payment) {
         throw new ApiError(404, "Order not found");
     }
+
     const ragpicker = await RagPicker.findById(payment.ragpicker_id);
     const secret = process.env.RAZORPAY_API_SECRET;
     const isValid = validatePaymentVerification(
@@ -65,7 +72,7 @@ const verifyOrder = asyncHandler(async (req, res) => {
         razorpay_signature,
         secret
     );
-
+    
     if (isValid) {
         payment.paymentStatus = true;
         await payment.save();
@@ -73,6 +80,7 @@ const verifyOrder = asyncHandler(async (req, res) => {
     } else {
         throw new ApiError(400, "Payment verification failed");
     }
+
 });
 
 export {

@@ -120,7 +120,6 @@ const login = asyncHandler(async (req, res) => {
 // Get the authenticated RagPicker
 const getRagPicker = asyncHandler(async (req, res) => {
     const ragPicker = req.ragPicker;
-
     res.status(200).json(new ApiResponse(200, ragPicker, "Rag Picker retrieved successfully"));
 });
 
@@ -262,12 +261,10 @@ const updateCoordinates = asyncHandler(async (req, res) => {
 // Get RagPicker by Username
 const getRagPickerByUsername = asyncHandler(async (req, res) => {
     const { username } = req.params;
-
     // Check if the username is provided
     if (!username) {
         throw new ApiError(400, "Username is required");
     }
-
     // Fetch the RagPicker from the database by username
     const ragPicker = await RagPicker.findOne({ username }).select("-password");
 
