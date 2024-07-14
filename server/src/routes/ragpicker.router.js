@@ -29,7 +29,7 @@ router.route("/delete").delete(verifyRagPickerJwt, deleteRagPicker); // Delete a
 
 router.route("/profile-picture").post(verifyRagPickerJwt, upload.single('profilePicture'), updateProfilePicture); // Update Profile Picture
 router.route("/review").post(verifyRagPickerJwt, addReview); // Add Review to authenticated RagPicker
-router.route("/update-coordinates").post( verifyRagPickerJwt, updateCoordinates);
+router.route("/update-coordinates").post( updateCoordinates);
 router.route("/username/:username").get(getRagPickerByUsername); // Get RagPicker by username
 
 router.get('/:id', getRagPickerById);

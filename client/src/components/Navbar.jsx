@@ -86,10 +86,10 @@ function Navbar() {
                     >
                       <div className="px-4 py-3">
                         <span className="block text-sm text-gray-900 dark:text-white">
-                          Bonnie Green
+                          {user?.name}
                         </span>
                         <span className="block text-sm text-gray-500 truncate dark:text-gray-400">
-                          name@flowbite.com
+                        {user?.email}
                         </span>
                       </div>
                       <ul className="py-2" aria-labelledby="user-menu-button">
@@ -97,28 +97,15 @@ function Navbar() {
                           <>
                             <li>
                               <Link
-                                to={`${type}/dashboard/profile`}
+                                to={`${type}/dashboard`}
                                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                               >
-                                Profile
+                                
+                                Dashboard
                               </Link>
                             </li>
-                            <li>
-                              <Link
-                                to={`${type}/dashboard/history`}
-                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                              >
-                                History
-                              </Link>
-                            </li>
-                            <li>
-                              <Link
-                                to={`${type}/dashboard/settings`}
-                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                              >
-                                Settings
-                              </Link>
-                            </li>
+                            
+                           
                           </>
                         ) : (
                           <>
@@ -130,32 +117,10 @@ function Navbar() {
                                 Dashboard
                               </Link>
                             </li>
-                            <li>
-                              <Link
-                                to={`${type}/dashboard/settings`}
-                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                              >
-                                Settings
-                              </Link>
-                            </li>
-                            <li>
-                              <Link
-                                to={`${type}/dashboard/earning`}
-                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                              >
-                                Earnings
-                              </Link>
-                            </li>
+                           
                           </>
                         )}
-                        <li>
-                          <button
-                            onClick={handleLogout}
-                            className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                          >
-                            Sign out
-                          </button>
-                        </li>
+                       
                       </ul>
                     </div>
                   )}
@@ -229,14 +194,15 @@ function Navbar() {
                     Home
                   </Link>
                 </li>
-                <li>
+             {type!=='ragpicker'
+&& <li>
                   <Link
                     to="/book"
                     className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                   >
                     Bookings
                   </Link>
-                </li>
+                </li>}
                 {status && (
                   <li>
                     <Link

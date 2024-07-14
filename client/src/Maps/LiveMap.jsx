@@ -4,6 +4,10 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { IoMdLocate } from "react-icons/io";
 import iconImg from '../assets/icon.png';
+import { useSelector } from 'react-redux';
+import axiosInstance from '../axiosConfig/axiosConfig';
+import { requestUrl } from '../../constant';
+import axios from 'axios';
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -26,7 +30,8 @@ const LiveMap = () => {
   const [userPosition, setUserPosition] = useState(null);
   const [error, setError] = useState(null);
   const mapRef = useRef();
-
+  const type = useSelector((state) => state.auth.type);
+  
   const fetchIpLocation = async () => {
     try {
       const response = await fetch('https://ipapi.co/json/');
@@ -39,12 +44,14 @@ const LiveMap = () => {
     }
   };
 
-  const fetchLiveLocation = () => {
+  const fetchLiveLocation = async () => {
     navigator.geolocation.getCurrentPosition(
-      (position) => {
+      async (position) => {
         const { latitude, longitude } = position.coords;
         setUserPosition([latitude, longitude]);
+        await axios.post(`${requestUrl}/${type!=='ragpicker'?'user':'rp'}/update-coordinates`, { lat: userPosition.latitude, lon: userPosition.longitude })
         setError(null);
+
       },
       (error) => {
         console.error("Error getting location:", error);
@@ -75,10 +82,10 @@ const LiveMap = () => {
   return (
     <div className=" w-full h-full rounded-xl relative ">
       {userPosition && (
-        <MapContainer 
-          center={userPosition} 
-          zoom={10} 
-          className="w-full h-full rounded-xl" 
+        <MapContainer
+          center={userPosition}
+          zoom={10}
+          className="w-full h-full rounded-xl"
           ref={mapRef}
         >
           <LayersControl position="topright">
