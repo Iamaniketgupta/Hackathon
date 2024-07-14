@@ -1,5 +1,5 @@
 import express from 'express';
-import { getRatingsByRagPickerUsername, postRatingReview } from '../controllers/ratingController.js';
+import { getRatingsByRagPickerUsername, postRatingReview } from '../controllers/rating.controller.js';
 import { verifyJwt } from '../middlewares/auth.middleware.js';
 
 const router = express.Router();

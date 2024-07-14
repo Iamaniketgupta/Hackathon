@@ -15,6 +15,8 @@ import Settings from './components/ragpickerSettingsPage/Setting.jsx';
 import Profile from './pages/Profile.jsx';
 import RagAuth from './Auth/RagAuth.jsx'
 import UserAuth from './Auth/UserAuth.jsx'
+import { Provider } from 'react-redux';
+import {store}  from "./store/store.js"
 
 const router = createBrowserRouter(
     createRoutesFromChildren(
@@ -38,5 +40,7 @@ const router = createBrowserRouter(
 )
 
 ReactDOM.createRoot(document.getElementById('root')).render(
+    <Provider store={store}>
         <RouterProvider router={router} />
+        </Provider>
 )

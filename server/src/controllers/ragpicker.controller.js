@@ -1,6 +1,6 @@
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import { RagPicker } from "../models/ragPicker.model.js"; // Import the RagPicker model
+import {RagPicker}  from "../models/ragPicker.model.js"; // Import the RagPicker model
 import asyncHandler from 'express-async-handler';
 import nodemailer from 'nodemailer';
 import { uploadToCloudinary, deleteFromCloudinary, publicId } from '../utils/cloudinary.js';

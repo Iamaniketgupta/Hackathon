@@ -9,7 +9,8 @@ import {
     addReview,
     login ,
     getRagPicker,
-    updateCoordinates
+    updateCoordinates,
+    getRagPickerByUsername
 } from '../controllers/ragpicker.controller.js';
 const router = Router();
 
