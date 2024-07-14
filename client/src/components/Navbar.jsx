@@ -9,6 +9,7 @@ function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const status = useSelector((state) => state.auth.status); // Assuming status is a boolean
   const type = useSelector((state) => state.auth.type);
+  const user = useSelector(state=>state.auth.user)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -74,7 +75,7 @@ function Navbar() {
                     <span className="sr-only mx-3">Open user menu</span>
                     <img
                       className="w-8 h-8 rounded-full"
-                      src="https://cdna.artstation.com/p/assets/images/images/014/813/486/large/kailas-matur-rag-picker-1.jpg?1545654474"
+                      src={user?.pfp}
                       alt="user photo"
                     />
                   </button>

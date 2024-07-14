@@ -3,10 +3,14 @@ import { MapContainer, TileLayer, Marker, Popup, LayersControl } from 'react-lea
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { getDistance } from 'geolib';
-import iconImg from '../assets/icon.png'
-delete L.Icon.Default.prototype._getIconUrl;
+import axios from 'axios';
+import { toast } from 'react-toastify';
 import { IoMdLocate } from "react-icons/io";
+import iconImg from '../assets/icon.png';
+import 'leaflet/dist/leaflet.css';
+import { requestUrl } from '../../constant';
 
+delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
@@ -24,7 +28,7 @@ const userIcon = new L.Icon({
 });
 
 const ragpickerIcon = new L.Icon({
-  iconUrl: 'https://www.iconpacks.net/icons/2/free-location-map-icon-2956-thumb.png', 
+  iconUrl: 'https://www.iconpacks.net/icons/2/free-location-map-icon-2956-thumb.png',
   iconSize: [40, 40],
   iconAnchor: [20, 40],
   popupAnchor: [1, -34],
@@ -32,23 +36,11 @@ const ragpickerIcon = new L.Icon({
   shadowSize: [41, 41],
 });
 
-const dummyRagpickers = [
-  { id: 1, name: 'Ragpicker 1', position: [30.95, 75.88644] },
-  { id: 2, name: 'Ragpicker 2', position: [30.94, 75.89644] },
-  { id: 3, name: 'Ragpicker 3', position: [30.93, 75.87644] },
-  { id: 4, name: 'Ragpicker 4', position: [30.92, 75.88644] },
-  { id: 5, name: 'Ragpicker 5', position: [30.91, 75.89644] },
-  { id: 6, name: 'Ragpicker 6', position: [30.90, 75.87644] },
-  { id: 7, name: 'Ragpicker 7', position: [30.89, 75.88644] },
-  { id: 8, name: 'Ragpicker 8', position: [30.88, 75.89644] },
-  { id: 9, name: 'Ragpicker 9', position: [30.87, 75.87644] },
-  { id: 10, name: 'Ragpicker 10', position: [30.86, 75.88644] },
-];
-
 const ListingMap = () => {
   const [userPosition, setUserPosition] = useState(null);
   const [distances, setDistances] = useState([]);
   const [error, setError] = useState(null);
+  const [ragPickers, setAllRagPickers] = useState([]);
   const mapRef = useRef();
 
   const fetchLiveLocation = () => {
@@ -65,7 +57,7 @@ const ListingMap = () => {
       {
         enableHighAccuracy: true,
         timeout: 5000,
-        maximumAge: 0
+        maximumAge: 0,
       }
     );
   };
@@ -79,31 +71,47 @@ const ListingMap = () => {
       const map = mapRef.current;
       map.flyTo(userPosition, 16, {
         animate: true,
-        duration: 4
+        duration: 4,
       });
     }
   }, [userPosition]);
+console.log(ragPickers)
+  useEffect(() => {
+    const calculateDistances = () => {
+      if (userPosition && ragPickers.length > 0) {
+        const calculatedDistances = ragPickers.map((ragpicker) => {
+          const dist = getDistance(
+            { latitude: userPosition[0], longitude: userPosition[1] },
+            { latitude: ragpicker?.lat, longitude: ragpicker?.long }
+          );
+          return { ...ragpicker, distance: dist };
+        });
+        setDistances(calculatedDistances);
+      }
+    };
+    calculateDistances();
+  }, [userPosition, ragPickers]);
 
   useEffect(() => {
-    if (userPosition) {
-      const calculatedDistances = dummyRagpickers.map(ragpicker => {
-        const dist = getDistance(
-          { latitude: userPosition[0], longitude: userPosition[1] },
-          { latitude: ragpicker.position[0], longitude: ragpicker.position[1] }
-        );
-        return { ...ragpicker, distance: dist };
-      });
-      setDistances(calculatedDistances);
-    }
-  }, [userPosition]);
+    const getAllRagPickers = async () => {
+      try {
+        const res = await axios.get(`${requestUrl}/users/rp/all`);
+        setAllRagPickers(res.data.ragpickers);
+      } catch (error) {
+        toast.error('Something went wrong');
+      }
+    };
+
+    getAllRagPickers();
+  }, []);
 
   return (
     <div className="mt-10 w-full h-full rounded-xl relative md:px-5">
       {userPosition && (
-        <MapContainer 
-          center={userPosition} 
-          zoom={7} 
-          className="w-full h-full rounded-xl" 
+        <MapContainer
+          center={userPosition}
+          zoom={7}
+          className="w-full h-full rounded-xl"
           ref={mapRef}
         >
           <LayersControl position="topright">
@@ -131,14 +139,20 @@ const ListingMap = () => {
           </LayersControl>
 
           <Marker position={userPosition} icon={userIcon}>
-            <Popup>
-              You
-            </Popup>
+            <Popup>You</Popup>
           </Marker>
-          {distances.map(ragpicker => (
-            <Marker key={ragpicker.id} position={ragpicker.position} icon={ragpickerIcon}>
+          {distances.map((ragpicker) => (
+            <Marker
+              key={ragpicker._id}
+              position={[ragpicker.lat, ragpicker.long]}
+              icon={ragpickerIcon}
+            >
               <Popup>
-                {ragpicker.name} - {ragpicker.distance < 1000 ? `${ragpicker.distance} meters` : `${(ragpicker.distance / 1000).toFixed(2)} kilometers`} away
+                {ragpicker.name} -{' '}
+                {ragpicker.distance < 1000
+                  ? `${ragpicker.distance} meters`
+                  : `${(ragpicker.distance / 1000).toFixed(2)} kilometers`}{' '}
+                away
               </Popup>
             </Marker>
           ))}
@@ -151,9 +165,9 @@ const ListingMap = () => {
       )}
       <button
         onClick={fetchLiveLocation}
-        className="absolute top-24 nd:left-7 left-3 z-[500] bg-blue-500 text-white p-2 rounded shadow-lg"
+        className="absolute top-24 md:left-7 left-3 z-[500] bg-blue-500 text-white p-2 rounded shadow-lg"
       >
-       <IoMdLocate size={25} />
+        <IoMdLocate size={25} />
       </button>
     </div>
   );

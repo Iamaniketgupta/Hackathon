@@ -31,7 +31,12 @@ function Listing() {
       sortRagPickers(sortBy);
     }
   }, [sortBy, ragPickers]);
-
+   
+    const getAllRagPickers = async () => {
+        try {
+            setLoading(true);
+            const res = await axios.get(`${requestUrl}/users/rp/all`);
+            setAllRagPickers(res?.data?.ragpickers);
   const getAllRagPickers = async () => {
     try {
       setLoading(true);

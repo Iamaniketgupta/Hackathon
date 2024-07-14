@@ -1,21 +1,20 @@
 import React, { useState } from "react";
 import { FaCamera } from "react-icons/fa";
-import axios from 'axios'
-import { BACKEND_URL } from "../../constants";
 import axiosInstance from "../../axiosConfig/axiosConfig";
 import { useSelector } from "react-redux";
 
 const Settings = () => {
-    const user = useSelector(state=>state.auth.user);
-    const [userImage, setUserImage] = useState(user?.pfp || "");
-    const [name, setName] = useState(user?.name || "");
-    const [address, setAddress] = useState(user?.address || "");
-    const [age, setAge] = useState(user?.age || "");
-    
+  const user = useSelector((state) => state.auth.user);
+  const [userImage, setUserImage] = useState(user?.pfp || "");
+  const [name, setName] = useState(user?.name || "");
+  const [state, setState] = useState(user?.state || "");
+  const [city, setCity] = useState(user?.city || "");
+  const [imageFile, setImageFile] = useState(null);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      setImageFile(file);
       const reader = new FileReader();
       reader.onload = () => {
         setUserImage(reader.result);
@@ -24,23 +23,31 @@ const Settings = () => {
     }
   };
 
-  const handleSubmit = async()=>{
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-        if(!name || !address || !age || !pricePerHour ){
-          console.log("all fields are required")
-          return;
-        }
-        const response = await axiosInstance.put("/ragpicker/update" , {
-          name,
-          address,
-          age,
-          pricePerHour
-        });
-        console.log("response : " , response)
+      if (!name || !state || !city || !imageFile) {
+        console.log("All fields are required");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("state", state);
+      formData.append("city", city);
+      formData.append("pfp", imageFile);
+
+      const response = await axiosInstance.put("/ragpicker/update", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log("response: ", response);
     } catch (error) {
-        console.log("Error while  submit : " , error)
+      console.log("Error while submitting: ", error);
     }
-  }
+  };
 
   return (
     <div className="mx-auto text-white">
@@ -67,7 +74,7 @@ const Settings = () => {
           </label>
         </div>
 
-        <form className="flex flex-col gap-4">
+        <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <div className="flex flex-col">
             <label className="text-sm font-medium">Name</label>
             <input
@@ -79,21 +86,21 @@ const Settings = () => {
           </div>
 
           <div className="flex flex-col">
-            <label className="text-sm font-medium">Address</label>
+            <label className="text-sm font-medium">State</label>
             <input
               type="text"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
+              value={state}
+              onChange={(e) => setState(e.target.value)}
               className="mt-1 p-2 rounded bg-gray-800 text-white border border-gray-700"
             />
           </div>
 
           <div className="flex flex-col">
-            <label className="text-sm font-medium">Age</label>
+            <label className="text-sm font-medium">City</label>
             <input
-              type="number"
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
+              type="text"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
               className="mt-1 p-2 rounded bg-gray-800 text-white border border-gray-700"
             />
           </div>
@@ -101,7 +108,6 @@ const Settings = () => {
           <button
             type="submit"
             className="mt-4 p-2 rounded bg-blue-600 hover:bg-blue-700 text-white font-semibold"
-            onClick={handleSubmit}
           >
             Update Profile
           </button>
