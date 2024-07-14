@@ -106,7 +106,7 @@ function RagCard({ data }) {
                 href="#"
                 className="text-sm font-medium text-gray-900 dark:text-white"
               >
-                {data?.reviews || 0} reviews
+                {data?.numberOfRating || 0} reviews
               </a>
             </div>
           </span>

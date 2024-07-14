@@ -12,6 +12,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { getDistance } from 'geolib';
 import RagCardSkeleton from '../components/RagCardSkeleton';
+import { useSelector } from 'react-redux';
 
 function Listing() {
   const [isGridView, setIsGridView] = useState(true);
@@ -19,7 +20,9 @@ function Listing() {
   const [ragPickers, setAllRagPickers] = useState(null);
   const [sortedRagPickers, setSortedRagPickers] = useState(null);
   const [sortBy, setSortBy] = useState('');
-
+  const type = useSelector((state) => state.auth.type);
+if(type==='ragpicker')
+  return;
   const toggleView = () => {
     setIsGridView(prev => !prev);
   };
