@@ -21,3 +21,7 @@
     background: rgba(255, 255, 255, 0.7); /* Color of the thumb on hover */
   }
   
+  .main::-webkit-scrollbar {
+    width: 0px; /* Width of the scrollbar */
+  }
+  

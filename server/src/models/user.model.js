@@ -43,7 +43,16 @@ const userSchema = new mongoose.Schema({
   gender: {
     type: String,
 
+  },
+  state:{
+    type:String,
+    required:true
+  },
+  city:{
+    type:String,
+    required:true
   }
+  
 }, { timestamps: true });
 
 // Middleware to hash password before saving

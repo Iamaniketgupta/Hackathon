@@ -32,7 +32,7 @@ const transporter = nodemailer.createTransport({
 
 // Initiate registration for RagPicker
 const initiateRagPickerRegistration = asyncHandler(async (req, res) => {
-    const { name, age, address, lat, long, gender, pricePerHour, username, email, password } = req.body;
+    const { name, age, address, lat, long, gender, pricePerHour, username, email, password , city , state} = req.body;
 
     if (!name || !username || !email || !password) {
         throw new ApiError(400, "All fields are required");
@@ -50,7 +50,7 @@ const initiateRagPickerRegistration = asyncHandler(async (req, res) => {
     }
 
     const otp = generateOTP(4);
-    tempRagPickerStore[email] = { name, age, address, lat, long, gender, pricePerHour, username, email, password, otp };
+    tempRagPickerStore[email] = { name, age, address, lat, long, gender, pricePerHour, username, email, password, otp, city , state };
 
     const mailOptions = {
         from: process.env.EMAIL,

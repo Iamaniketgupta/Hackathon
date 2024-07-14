@@ -9,6 +9,12 @@ const Otp = ({ setOtpSent, requestapi, formData  , type}) => {
     const [otpValue, setOtpValue] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    
+    const user = useSelector(state=>state.auth.user);
+    const type1 = useSelector(state=>state.auth.type);
+
+    console.log("user : " , user);
+    console.log("type  : " , type1)
 
     const verifyOTP = async (e) => {
         e.preventDefault();
@@ -21,16 +27,23 @@ const Otp = ({ setOtpSent, requestapi, formData  , type}) => {
             if (response.status === 200 || response.status === 201) {
                 setOtpSent(true);
                 toast.success("🎉 OTP Verified Successfully!");
+                console.log("respinse.data :",response.data)
                 if(type === "user"){
                     const obj = {
-                        user : response.data.data.user
+                        user : response.data.data.user,
+                        type :'user'
                     }
+
+                    console.log("obj : " ,obj)
                     dispatch(login(obj));
                 }else{
                     
                     const obj = {
-                        user : response?.data?.data?.ragPicker
+                        user : response.data.data.newRagPicker,
+                        type:'ragpicker'
                     }
+
+                    console.log("object : " , obj)
                     dispatch(login(obj));
                 }
 

@@ -6,12 +6,12 @@ import axiosInstance from "../../axiosConfig/axiosConfig";
 import { useSelector } from "react-redux";
 
 const Settings = () => {
-  const user = useSelector(state=>state.auth.user);
-  const [userImage, setUserImage] = useState(user?.pfp || "");
-  const [name, setName] = useState(user?.name || "");
-  const [address, setAddress] = useState(user?.address || "");
-  const [age, setAge] = useState(user?.age || "");
-  const [pricePerHour, setPricePerHour] = useState(user?.pricePerHour || "");
+    const user = useSelector(state=>state.auth.user);
+    const [userImage, setUserImage] = useState(user?.pfp || "");
+    const [name, setName] = useState(user?.name || "");
+    const [address, setAddress] = useState(user?.address || "");
+    const [age, setAge] = useState(user?.age || "");
+    
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -45,7 +45,7 @@ const Settings = () => {
   return (
     <div className="mx-auto text-white">
       <div className="my-8 font-bold text-3xl">Update details :</div>
-      <div className="max-w-500px  w-[290px]  sm:w-[500px] mx-auto p-6 backdrop-blur-md bg-white/10 rounded-lg shadow-lg flex flex-col gap-6 text-white">
+      <div className="max-w-500px w-[290px] sm:w-[500px] mx-auto p-6 backdrop-blur-md bg-white/10 rounded-lg shadow-lg flex flex-col gap-6 text-white">
         <div className="relative mx-auto w-24 h-24 mb-6">
           <img
             src={userImage}
@@ -94,16 +94,6 @@ const Settings = () => {
               type="number"
               value={age}
               onChange={(e) => setAge(e.target.value)}
-              className="mt-1 p-2 rounded bg-gray-800 text-white border border-gray-700"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label className="text-sm font-medium">Price per Hour</label>
-            <input
-              type="number"
-              value={pricePerHour}
-              onChange={(e) => setPricePerHour(e.target.value)}
               className="mt-1 p-2 rounded bg-gray-800 text-white border border-gray-700"
             />
           </div>

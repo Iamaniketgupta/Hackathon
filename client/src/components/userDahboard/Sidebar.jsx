@@ -90,15 +90,7 @@ function Sidebar() {
                         <ul className="p-4 space-y-4">
                             <li>
                                 <Link
-                                    to="/ragpicker/dashboard/"
-                                    className="block py-2 px-3 text-white hover:bg-black/30 rounded"
-                                >
-                                    Dashboard
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    to="/ragpicker/dashboard/profile"
+                                    to="/user/dashboard"
                                     className="block py-2 px-3 text-white hover:bg-black/30 rounded"
                                 >
                                     Profile
@@ -106,15 +98,15 @@ function Sidebar() {
                             </li>
                             <li>
                                 <Link
-                                    to="/ragpicker/dashboard/earning"
+                                    to="/user/dashboard/history"
                                     className="block py-2 px-3 text-white hover:bg-black/30 rounded"
                                 >
-                                    Earnings
+                                    History
                                 </Link>
                             </li>
                             <li>
                                 <Link
-                                    to="/ragpicker/dashboard/settings"
+                                    to="/user/dashboard/settings"
                                     className="block py-2 px-3 text-white hover:bg-black/30 rounded"
                                 >
                                     Settings

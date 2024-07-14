@@ -32,7 +32,7 @@ const transporter = nodemailer.createTransport({
 
 // Initiate register endpoint
 const initiateRegister = asyncHandler(async (req, res) => {
-    const { username, email, password, name, age, lat, long, address, gender } = req.body;
+    const { username, email, password, name, age, lat, long, address, gender , city , state } = req.body;
 
     if (!username || !email || !password || !name ) {
         throw new ApiError(400, "All fields are required");
@@ -45,7 +45,7 @@ const initiateRegister = asyncHandler(async (req, res) => {
 
     const otp = generateOTP(4);
     // Store user details and OTP
-    tempUserStore[email] = { username, password, name, age, lat, long, address, gender, otp };
+    tempUserStore[email] = { username, password, name, age, lat, long, address, gender, otp, city , state };
 
     const mailOptions = {
         from: process.env.EMAIL,
@@ -83,8 +83,8 @@ const verifyOtp = asyncHandler(async (req, res) => {
     }
 
     // After verification, create the user
-    const { username, password, name, age, lat, long, address, gender } = tempUser;
-    const user = await User.create({ username, email, password, name, age, lat, long, address, gender });
+    const { username, password, name, age, lat, long, address, gender, city , state } = tempUser;
+    const user = await User.create({ username, email, password, name, age, lat, long, address, gender, city , state });
 
     const accessToken = user.generateAccessToken();
     delete tempUserStore[email]; // Clean up the temporary user data
