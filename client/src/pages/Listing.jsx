@@ -6,10 +6,12 @@ import RagCard from '../components/RagCard';
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { BsFillGrid3X3GapFill } from "react-icons/bs";
 import ListingMap from '../Maps/ListingMap';
+
 import { requestUrl } from '../../constant';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { getDistance } from 'geolib';
+import RagCardSkeleton from '../components/RagCardSkeleton';
 
 function Listing() {
   const [isGridView, setIsGridView] = useState(true);
@@ -19,7 +21,7 @@ function Listing() {
   const [sortBy, setSortBy] = useState('');
 
   const toggleView = () => {
-    setIsGridView(!isGridView);
+    setIsGridView(prev => !prev);
   };
 
   useEffect(() => {
@@ -29,14 +31,11 @@ function Listing() {
   useEffect(() => {
     if (sortBy && ragPickers) {
       sortRagPickers(sortBy);
+    } else {
+      setSortedRagPickers(ragPickers);
     }
   }, [sortBy, ragPickers]);
-   
-    const getAllRagPickers = async () => {
-        try {
-            setLoading(true);
-            const res = await axios.get(`${requestUrl}/users/rp/all`);
-            setAllRagPickers(res?.data?.ragpickers);
+
   const getAllRagPickers = async () => {
     try {
       setLoading(true);
@@ -46,7 +45,7 @@ function Listing() {
           const distance = await calculateDistance(picker.lat, picker.long);
           return { ...picker, distance };
         }
-        return picker;
+        return { ...picker, distance: Infinity }; // Assign Infinity if no coordinates
       }));
       setAllRagPickers(ragpickersWithDistance);
       setLoading(false);
@@ -69,14 +68,14 @@ function Listing() {
         },
         (error) => {
           console.error("Error getting location:", error);
-          reject(error);
+          resolve(Infinity); // Fallback distance
         }
       );
     });
   };
 
   const sortRagPickers = (sortBy) => {
-    let sortedList = [...ragPickers];
+    const sortedList = [...(sortedRagPickers || ragPickers)];
     if (sortBy === 'cost') {
       sortedList.sort((a, b) => a.pricePerHour - b.pricePerHour);
     } else if (sortBy === 'ratings') {
@@ -89,14 +88,15 @@ function Listing() {
 
   return (
     <>
+
       <Background>
         <Navbar />
-        <section className='min-h-screen text-white min-w-screen flex flex-col justify-center items-center mt-20'>
-          <h1 className='text-2xl md:text-4xl font-bold tracking-tight text-white text-center mb-10'>
-            Book Your RagPickers 🧹
+        <section className='min-h-screen text-white flex flex-col justify-center items-center mt-20'>
+          <h1 className='text-3xl md:text-4xl font-bold tracking-tight text-center mb-10'>
+            Book Your RagPickers
           </h1>
           <div className="px-5 gap-5 mb-10 w-full flex flex-col md:flex-row items-center justify-between">
-            <form className="max-w-sm p-6 bg-white flex-grow bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg shadow-md">
+            <form className="w-full md:max-w-md p-6 bg-white flex-grow bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg shadow-md">
               <label htmlFor="sortBy" className="block text-lg mb-4 px-2 font-bold text-white">
                 Sort By
               </label>
@@ -106,10 +106,10 @@ function Listing() {
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
               >
-                <option value="" hidden className="bg-gray-900">Choose Sort By</option>
-                <option value="cost" className="bg-gray-900">Cost 💰</option>
-                <option value="ratings" className="bg-gray-900">Ratings 🌟</option>
-                <option value="distance" className="bg-gray-900">Distance 🚴‍♂️</option>
+                <option value="" hidden>Choose Sort By</option>
+                <option value="cost" className='bg-gray-900'>Cost 💰</option>
+                <option value="ratings" className='bg-gray-900'>Ratings 🌟</option>
+                <option value="distance" className='bg-gray-900'>Distance 🚴‍♂️</option>
               </select>
             </form>
             <div className='flex items-center gap-3 text-2xl mt-5 md:mt-0'>
@@ -123,12 +123,21 @@ function Listing() {
           </div>
 
           {isGridView ? (
-            <div className="flex flex-col md:grid md:grid-cols-3 lg:grid-cols-4 grid-cols-1 gap-10 min-w-screen items-center justify-center w-full">
+            <div className="flex flex-col md:grid md:grid-cols-3 lg:grid-cols-4 grid-cols-1 gap-10 items-center justify-center w-full">
               {loading ? (
-                <p>Loading...</p>
-              ) : (
+                <>
+                  <RagCardSkeleton/>
+                  <RagCardSkeleton/>
+                  <RagCardSkeleton/>
+                  <RagCardSkeleton/>
+                  <RagCardSkeleton/>
+                  <RagCardSkeleton/>
+                  </>
+                ) : (
                 (sortedRagPickers || ragPickers)?.map((item) => (
+                    <>
                   <RagCard key={item._id} data={item} />
+                  </>
                 ))
               )}
             </div>

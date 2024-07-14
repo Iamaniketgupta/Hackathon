@@ -35,7 +35,7 @@ function RagCard({ data }) {
       className="w-full block h-min rounded-2xl backdrop-blur-xl bg-white/5 focus:ring-gray-200 border-2 border-white/20 shadow-2xl hover:bg-white/10"
       onClick={() => { setIsMobileMenuOpen(false); }}
     >
-      <div className="flex justify-end px-2 pt-2">
+      <div className="flex justify-end i px-2 pt-2">
         <button
           id="dropdownButton"
           data-dropdown-toggle="dropdown"
