@@ -102,7 +102,7 @@ function Sidebar() {
                                     to="/user/dashboard/history"
                                     className="block py-2 px-3 text-white hover:bg-black/30 rounded"
                                 >
-                                    History
+                                    My Bookings
                                 </Link>
                             </li>
                             <li>
