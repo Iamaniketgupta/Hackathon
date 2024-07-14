@@ -38,6 +38,7 @@ const RagLogin = ({ setRegisterTab }) => {
             if (response.status === 200) {
                 toast.success("🚀 Login successful!");
                 console.log('Login successful:', response.data);
+                localStorage.setItem("accessToken" , response.data?.data?.accessToken);
                 const obj = {
                     user : response.data.data.ragPicker,
                     type : 'ragpicker'

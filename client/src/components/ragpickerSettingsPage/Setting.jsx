@@ -1,66 +1,75 @@
 import React, { useState } from "react";
 import { FaCamera } from "react-icons/fa";
-import axios from 'axios'
-import { BACKEND_URL } from "../../constants";
 import axiosInstance from "../../axiosConfig/axiosConfig";
 import { useSelector } from "react-redux";
 
 const Settings = () => {
-  const user = useSelector(state=>state.auth.user);
+  const user = useSelector(state => state.auth.user);
   const [userImage, setUserImage] = useState(user?.pfp || "");
   const [name, setName] = useState(user?.name || "");
   const [address, setAddress] = useState(user?.address || "");
   const [age, setAge] = useState(user?.age || "");
   const [pricePerHour, setPricePerHour] = useState(user?.pricePerHour || "");
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setUserImage(reader.result);
-      };
-      reader.readAsDataURL(file);
+      const formData = new FormData();
+      formData.append('profilePicture', file);
+
+      try {
+        const res = await axiosInstance.post('/rp/profile-picture', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        console.log("Profile picture updated:", res.data);
+        setUserImage(res.data.updatedProfilePictureUrl); // Update based on your backend response
+      } catch (error) {
+        console.error("Error updating profile picture:", error);
+      }
     }
   };
 
-  const handleSubmit = async()=>{
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-        if(!name || !address || !age || !pricePerHour ){
-          console.log("all fields are required")
-          return;
-        }
-        const response = await axiosInstance.put("/ragpicker/update" , {
-          name,
-          address,
-          age,
-          pricePerHour
-        });
-        console.log("response : " , response)
+      if (!name || !address || !age || !pricePerHour) {
+        console.log("All fields are required");
+        return;
+      }
+      const response = await axiosInstance.put("/rp/update", {
+        name,
+        address,
+        age,
+        pricePerHour
+      });
+      console.log("Response:", response);
     } catch (error) {
-        console.log("Error while  submit : " , error)
+      console.log("Error while submitting:", error);
     }
-  }
+  };
 
   return (
     <div className="mx-auto text-white">
-      <div className="my-8 font-bold text-3xl">Update details :</div>
-      <div className="max-w-500px  w-[290px]  sm:w-[500px] mx-auto p-6 backdrop-blur-md bg-white/10 rounded-lg shadow-lg flex flex-col gap-6 text-white">
+      <div className="my-8 font-bold text-3xl">Update details:</div>
+      <div className="max-w-500px w-[290px] sm:w-[500px] mx-auto p-6 backdrop-blur-md bg-white/10 rounded-lg shadow-lg flex flex-col gap-6 text-white">
         <div className="relative mx-auto w-24 h-24 mb-6">
           <img
             src={userImage}
             alt="Profile"
             className="w-24 h-24 rounded-full border-2 border-blue-500 shadow-md mx-auto"
+            name="profilePicture"
           />
           <input
             type="file"
             accept="image/*"
             className="hidden"
-            id="profileImageInput"
+            id="profilePicture"
             onChange={handleImageChange}
           />
           <label
-            htmlFor="profileImageInput"
+            htmlFor="profilePicture"
             className="absolute bottom-0 right-0 p-1 bg-gray-800 rounded-full cursor-pointer"
           >
             <FaCamera className="text-white" />

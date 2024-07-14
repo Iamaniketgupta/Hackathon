@@ -26,7 +26,9 @@ const userSchema = new mongoose.Schema({
 
   },
   pfp: {
-    type: String // URL to the profile picture
+    type: String ,
+    default:"https://res.cloudinary.com/surajgsn/image/upload/v1720951456/oab0ebxqz1qgnllamdvf.png"
+    // URL to the profile picture
   },
   lat: {
     type: Number,

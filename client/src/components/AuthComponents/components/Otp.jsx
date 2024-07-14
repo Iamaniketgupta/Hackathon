@@ -28,6 +28,7 @@ const Otp = ({ setOtpSent, requestapi, formData  , type}) => {
                 setOtpSent(true);
                 toast.success("🎉 OTP Verified Successfully!");
                 console.log("respinse.data :",response.data)
+                localStorage.setItem("accessToken" , response.data?.data?.accessToken);
                 if(type === "user"){
                     const obj = {
                         user : response?.data?.data?.user,
