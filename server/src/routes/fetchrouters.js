@@ -6,6 +6,6 @@ const router = Router();
 router.get('/rp/all',getAllRagPicker)
 
 
-router.get('/bookings/all',getAllBookings)
+router.get('/bookings/all',verifyJwt,getAllBookings)
 
 export default router

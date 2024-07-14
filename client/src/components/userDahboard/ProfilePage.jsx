@@ -37,7 +37,7 @@ const UserProfile = () => {
 
 
         {/* ongoing */}
-
+{/* 
         <div className="bg-white/10 p-5 relative rounded-lg shadow-lg p-2 my-10">
           <div className="h-2 w-2 absolute top-0 left-0 bg-green-500 animate-ping rounded-full"></div>
 
@@ -79,7 +79,7 @@ const UserProfile = () => {
 
 
 
-        </div>
+        </div> */}
 
 
       </div>
