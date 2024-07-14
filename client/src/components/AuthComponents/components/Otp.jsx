@@ -30,7 +30,7 @@ const Otp = ({ setOtpSent, requestapi, formData  , type}) => {
                 console.log("respinse.data :",response.data)
                 if(type === "user"){
                     const obj = {
-                        user : response.data.data.user,
+                        user : response?.data?.data?.user,
                         type :'user'
                     }
 
@@ -39,7 +39,7 @@ const Otp = ({ setOtpSent, requestapi, formData  , type}) => {
                 }else{
                     
                     const obj = {
-                        user : response.data.data.newRagPicker,
+                        user : response?.data?.data.newRagPicker,
                         type:'ragpicker'
                     }
 

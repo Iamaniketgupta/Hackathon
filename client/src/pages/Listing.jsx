@@ -20,25 +20,18 @@ function Listing() {
     };
 
     useEffect(() => {
-<<<<<<< HEAD
         getAllRagPickers();
     }, []);
 
-    const getAllRagPickers = async () => {
-=======
-        getAllRagPickerss();
-    }, []);
-
+   
     const getAllRagPickerss = async () => {
->>>>>>> bcfcc5da96d3daf670e9f4e3cc74ab89da42dc8d
         try {
             setLoading(true);
             const res = await axios.get(`${requestUrl}/users/rp/all`);
             setAllRagPickers(res?.data?.ragpickers);
-<<<<<<< HEAD
-=======
+
             console.log(res.data.ragpickers);
->>>>>>> bcfcc5da96d3daf670e9f4e3cc74ab89da42dc8d
+
             setLoading(false);
         } catch (error) {
             toast.error('Something went wrong');
