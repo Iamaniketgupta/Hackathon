@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { requestUrl } from '../../../constant';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../store/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const UserLogin = ({ setRegisterTab }) => {
     const [formData, setFormData] = useState({
@@ -9,6 +12,13 @@ const UserLogin = ({ setRegisterTab }) => {
         password: '',
     });
     const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch()
+    const navigate = useNavigate();
+    const user = useSelector(state=>state.auth.user);
+    const type = useSelector(state=>state.auth.type);
+
+    console.log("user : " , user);
+    console.log("type  : " , type)
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -22,11 +32,18 @@ const UserLogin = ({ setRegisterTab }) => {
         e.preventDefault();
         try {
             setLoading(true);
-
             const response = await axios.post(`${requestUrl}/user/login`, formData);
             if (response.status === 200) {
                 toast.success("🚀 Login successful!");
                 console.log('Login successful:', response.data);
+                const obj = {
+                    user:response?.data?.data?.user,
+                    type:"user"
+                }
+                dispatch(login(obj));
+                navigate(`/user/dashboard`);
+                console.log('Login successful:', response.data.data);
+                window.localStorage.setItem("accessToken",response.data.data.accessToken);
             } else {
                 toast.error("Login failed. Please try again.");
             }

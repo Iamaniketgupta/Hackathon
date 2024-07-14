@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { requestUrl } from '../../../constant';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../store/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const RagLogin = ({ setRegisterTab }) => {
     const [formData, setFormData] = useState({
@@ -9,6 +12,14 @@ const RagLogin = ({ setRegisterTab }) => {
         password: '',
     });
     const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch()
+    const navigate  = useNavigate()
+    
+    const user = useSelector(state=>state.auth.user);
+    const type = useSelector(state=>state.auth.type);
+
+    console.log("user : " , user);
+    console.log("type  : " , type)
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -27,6 +38,13 @@ const RagLogin = ({ setRegisterTab }) => {
             if (response.status === 200) {
                 toast.success("🚀 Login successful!");
                 console.log('Login successful:', response.data);
+                const obj = {
+                    user : response.data.data.ragPicker,
+                    type : 'ragpicker'
+                }
+                dispatch(login(obj));
+                navigate("/ragpicker/dashboard")
+                
             } else {
                 toast.error("Login failed. Please try again.");
             }

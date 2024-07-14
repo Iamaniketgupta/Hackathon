@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Otp from './components/Otp';
 import { FaRegEyeSlash, FaEye } from "react-icons/fa";
@@ -13,11 +13,36 @@ const RagSignin = ({ setRegisterTab }) => {
         username: '',
         email: '',
         password: '',
+        lat:'',
+        long:'',
+        state:'',
+        city:''
     });
+
+
 
     const [otpsent, setOtpSent] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
+
+    const fetchLocation = async()=>{
+        try {
+            const res = await axios.get('https://ipapi.co/json/');
+            console.log("response : " , res);
+            if(res){
+                const {latitude , longitude , city ,region } = res.data;
+                setFormData({
+                    ...formData,
+                    ['lat']: latitude,
+                    ['long']: longitude,
+                    ['city']: city,
+                    ['state']: region,
+                });
+            }
+        } catch (error) {
+            console.log("error :  ", error)
+        }
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -59,6 +84,11 @@ const RagSignin = ({ setRegisterTab }) => {
     const togglePassVis = () => {
         setShowPassword(!showPassword);
     };
+
+    useEffect(() => {
+        fetchLocation();
+    }, [])
+    
 
     return (
         <div className='text-gray-800 max-w-xl mx-auto p-5'>

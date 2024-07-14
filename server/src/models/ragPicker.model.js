@@ -66,7 +66,11 @@ const ragPickerSchema = new mongoose.Schema({
     type:Boolean,
     default:true
   },
-  pincode:{
+  state:{
+    type:String,
+    required:true
+  },
+  city:{
     type:String,
     required:true
   }
