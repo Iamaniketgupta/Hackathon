@@ -13,7 +13,6 @@ export const authSlice = createSlice({
         login:(state,action)=>{
             
             const { user , type } = action.payload;
-            const { user } = action.payload;
             state.status = true,
             state.user = user
             state.type = type

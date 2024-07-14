@@ -27,7 +27,6 @@ app.use("/booking" , bookingRouter)
 app.use("/rating" , ratingRouter)
 app.use('/users',fetchRouters);
 
-import bookingRouter from './routes/booking.router.js';
 import paymentRouter from './routes/payment.router.js';
 app.use("/user", userRouter);
 app.use("/rp", ragpickerRouter);

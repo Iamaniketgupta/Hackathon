@@ -56,7 +56,7 @@ const RagSignin = ({ setRegisterTab }) => {
         e.preventDefault();
 
         const usernamePattern = /^[a-zA-Z0-9-_]+$/;
-        if (!usernamePattern.test(formData.username)) {
+        if (!usernamePattern.test(formData?.username)) {
             toast.error("Username can only contain letters, numbers, '-' or '_', and no spaces.");
             return;
         }
@@ -69,13 +69,13 @@ const RagSignin = ({ setRegisterTab }) => {
                 setOtpSent(true);
                 toast.success("🚀 OTP Sent on your Email");
             } else {
-                toast.error(error.response.data.message || "Registration failed. Please try again.");
+                toast.error(error?.response?.data?.message || "Registration failed. Please try again.");
             }
             setLoading(false);
 
         } catch (error) {
             console.error('Error submitting form:', error);
-            toast.error(error.response.data.message || "Failed to register. Please try again later.");
+            toast.error(error?.response?.data?.message || "Failed to register. Please try again later.");
             setLoading(false);
 
         }
