@@ -4,9 +4,7 @@ import { verifyJwt } from '../middlewares/auth.middleware.js';
 
 const router = express.Router();
 
-router.use(verifyJwt); // Protect all routes below this middleware
-
 router.route('/ragpicker/:username').get(getRatingsByRagPickerUsername);
-router.route('/postreview').post(postRatingReview);
+router.route('/postreview').post(verifyJwt,postRatingReview);
 
 export default router; 

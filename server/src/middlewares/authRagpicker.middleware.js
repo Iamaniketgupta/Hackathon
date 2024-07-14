@@ -7,10 +7,8 @@ export const verifyRagPickerJwt = asyncHandler(async (req, res, next) => {
     try {
         console.log("req.headers " ,req.header("Authorization") )
         const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "") || req.body?.token || req.body.headers?.Authorization?.replace("Bearer ", "");
-
-        console.log("req.body.token : " , req.body?.token)
-
-        console.log("token : " ,token)
+        console.log("req.body.token : " , req.body?.token);
+        console.log("token : " ,token);
         if (!token) {
             throw new ApiError(401, "Unauthorized request");
         }

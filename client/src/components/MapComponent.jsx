@@ -57,7 +57,7 @@ const MapComponent = ({ position2=[30.94, 75.88644] }) => {
               <h2>Distance: {formattedDistance} away</h2>
             </div>
           )}
-          <MapContainer center={position1} zoom={8} className='w-full h-[400px] mt-10'>
+          <MapContainer center={position1} zoom={10} className='w-full h-[400px] mt-10'>
             <TileLayer
               url="http://mt1.google.com/vt?lyrs=m&x={x}&y={y}&z={z}"
             />

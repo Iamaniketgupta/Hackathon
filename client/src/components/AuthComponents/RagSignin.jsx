@@ -194,7 +194,7 @@ const RagSignin = ({ setRegisterTab }) => {
                                         type="number"
                                         autoComplete="off"
                                         className=' outline-none  px-4 py-2 text-gray-900 rounded-full w-full'
-                                        name="price"
+                                        name="pricePerHour"
                                         min={50}
                                         id="price"
                                         required
