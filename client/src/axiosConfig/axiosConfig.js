@@ -7,7 +7,7 @@ const accessToken = localStorage.getItem('accessToken');
 
 // Create an instance of axios
 const axiosInstance = axios.create({
-  baseURL: 'http://onepunchcoders-api.vercel.app',
+  baseURL: 'https://onepunchcoders-api.vercel.app',
 });
 
 // Set the Authorization header for every request
