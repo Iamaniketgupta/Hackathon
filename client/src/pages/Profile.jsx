@@ -1,13 +1,71 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Background from '../components/Background'
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import MapComponent from '../components/MapComponent';
 import Review from '../components/Review';
 import StarRating from '../components/StarRating';
+import { requestUrl, RAZORPAY_KEY } from '../../constant';
+import axiosInstance from '../axiosConfig/axiosConfig';
+import { useParams, useSearchParams } from 'react-router-dom';
+import { isNumber } from 'razorpay/dist/utils/razorpay-utils';
+import { toast } from 'react-toastify';
 
 function Profile() {
-    const [rating, setRating] = useState(1);
+    const { username } = useParams();
+    const [rating, setRating] = useState(5);
+    const [hours, setHours] = useState(1);
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const chooseHours=(e)=>{
+        if(isNumber(e.target.value) && e.target.value>0 && e.target.value<6){
+             setHours(e.target.value);
+        }else{
+            setHours(1);
+        }
+    }
+
+    const checkoutHandler = async () => {
+        const instance = async () => {
+            try {
+                const response = await axiosInstance.post(`${requestUrl}/payment/create_order`, {
+                    username,
+                    hours
+                });
+                return response.data.message;
+            } catch (error) {
+                console.log("error : ", error);
+            }
+        };
+        const order = await instance();
+        const key = RAZORPAY_KEY;
+        const options = {
+            key,
+            amount: Math.ceil(order.amount / 100),
+            currency: "INR",
+            name: "RagPicker",
+            description: "RazorPay",
+            image: "https://cdna.artstation.com/p/assets/images/images/014/813/486/large/kailas-matur-rag-picker-1.jpg?1545654474",
+            order_id: order.id,
+            callback_url: `${requestUrl}/payment/verify_order`,
+            notes: {
+                "address": "Razorpay Corporate Office"
+            },
+            theme: {
+                "color": "#121212"
+            }
+        };
+        const razor = new window.Razorpay(options);
+        razor.open();
+    };
+    useEffect(() => {
+        console.log(searchParams);
+        if (searchParams.get('paymentdone') == "true") {
+          toast.success('Hurray! Booked Successfully');
+          window.history.replaceState(null, '', username);
+        }
+      }, []);
+
     return (
         <>
             <Background>
@@ -22,7 +80,7 @@ function Profile() {
                         <h5 className="mb-1 text-2xl font-medium text-gray-900 dark:text-white">
                             Bonnie Green
                         </h5>
-                        <div className='flex flex-col p-2 gap-1 items-start'>
+                        <div className='flex flex-col p-2 gap-1 justify-center items-center'>
                             <span className="text-md text-white/90">
                                 Charges: Rs100/hr
                             </span>
@@ -47,9 +105,16 @@ function Profile() {
                                     </a>
                                 </div>
                             </span>
+                            <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                <h2 className='w-full font-bold'>Hours you need</h2>
+                            </label>
+                            <input id="hours" type="number" value={hours} onChange={chooseHours} className="bg-transparent w-20 text-center border border-white/50 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5   dark:placeholder-gray-400
+                            dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 font-bold"/>
+
                         </div>
                         <button
                             className="inline-flex focus:ring-gray-200  items-center text-lg px-4 py-2 font-medium text-center text-white rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            onClick={checkoutHandler}
                         >
                             Book 🧹
                         </button>
@@ -58,29 +123,29 @@ function Profile() {
                     <div className="col-span-4 p-5">
                         <h1 className='text-2xl md:text-4xl font-bold tracking-tight text-white text-center mb-10'>Ratings and Reviews</h1>
                         <form action="">
-                        <>
-  <label
-    htmlFor="message"
-    className="block mb-2 text-md font-medium text-gray-900 dark:text-white"
-  >
-      Your review
-  </label>
-  <StarRating rating={rating} setRating={setRating}/>
-  <textarea
-    id="message"
-    rows={4}
-    className="block p-2.5 w-full text-sm text-gray-900 bg-black/20 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-    placeholder="Write your thoughts here..."
-    defaultValue={""}
-  />
-  <div className="flex justify-end">
-     <button
-    className="inline-flex focus:ring-gray-200 my-2  items-center px-4 py-2 font-medium text-center text-white rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                        >
-    Submit
-   </button>
-   </div>
-</>
+                            <>
+                                <label
+                                    htmlFor="message"
+                                    className="block mb-2 text-md font-medium text-gray-900 dark:text-white"
+                                >
+                                    Your review
+                                </label>
+                                <StarRating rating={rating} setRating={setRating} />
+                                <textarea
+                                    id="message"
+                                    rows={4}
+                                    className="block p-2.5 w-full text-sm text-gray-900 bg-black/20 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Write your thoughts here..."
+                                    defaultValue={""}
+                                />
+                                <div className="flex justify-end">
+                                    <button
+                                        className="inline-flex focus:ring-gray-200 my-2  items-center px-4 py-2 font-medium text-center text-white rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                    >
+                                        Submit
+                                    </button>
+                                </div>
+                            </>
 
                         </form>
                         <Review />

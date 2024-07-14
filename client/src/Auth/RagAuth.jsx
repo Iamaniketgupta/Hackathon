@@ -26,7 +26,7 @@ const SignUp = () => {
                     </div>
                     {/* Tabs */}
 
-                    <div className='md:p-5 flex  mx-auto  max-md:max-w-[400px] max-w-[500px] max-md:my-10   items-center'>
+                    <div className='md:p-5 flex  mx-auto  max-md:max-w-[400px] max-w-[600px] max-md:my-10   items-center'>
                         <div className='bg-white border w-full shadow-lg  rounded-xl max-sm:text-sm  md:p-5'>
                             {RegisterTab ? <RagSignin setRegisterTab={setRegisterTab} /> : <RagLogin setRegisterTab={setRegisterTab} />}
                         </div>

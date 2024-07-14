@@ -20,21 +20,24 @@ function Listing() {
     };
 
     useEffect(() => {
-        getAllRagPickerss()
-    }, [])
+        getAllRagPickers();
+    }, []);
+
+   
     const getAllRagPickerss = async () => {
         try {
-            setLoading(true)
-            const res = await axios.get(`${requestUrl}/users/rp/all`)
+            setLoading(true);
+            const res = await axios.get(`${requestUrl}/users/rp/all`);
             setAllRagPickers(res?.data?.ragpickers);
-            console.log(res.data.ragpickers);
-            setLoading(false)
-        } catch (error) {
-            toast.error('Something went wrong')
-            setLoading(false)
 
+            console.log(res.data.ragpickers);
+
+            setLoading(false);
+        } catch (error) {
+            toast.error('Something went wrong');
+            setLoading(false);
         }
-    }
+    };
 
     return (
         <>
@@ -53,7 +56,7 @@ function Listing() {
                                 id="sortBy"
                                 className="w-full p-3 text-gray-300 bg-transparent border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                             >
-                                <option selected value="" className="bg-gray-900">Choose Sort By</option>
+                                <option value="" className="bg-gray-900">Choose Sort By</option>
                                 <option value="cost" className="bg-gray-900">Cost 💰</option>
                                 <option value="ratings" className="bg-gray-900">Ratings 🌟</option>
                                 <option value="distance" className="bg-gray-900">Distance 🚴‍♂️</option>
@@ -71,10 +74,13 @@ function Listing() {
 
                     {isGridView ? (
                         <div className="flex flex-col md:grid md:grid-cols-3 lg:grid-cols-4 grid-cols-1 gap-10 min-w-screen items-center justify-center w-full">
-                            {ragPickers?.map((item) =>
-                                <RagCard key={item._id} data={item} />
+                            {loading ? (
+                                <p>Loading...</p>
+                            ) : (
+                                ragPickers?.map((item) => (
+                                    <RagCard key={item._id} data={item} />
+                                ))
                             )}
-
                         </div>
                     ) : (
                         <div className="w-full h-[600px]">
@@ -82,8 +88,8 @@ function Listing() {
                         </div>
                     )}
                 </section>
+                <Footer />
             </Background>
-            <Footer />
         </>
     );
 }
