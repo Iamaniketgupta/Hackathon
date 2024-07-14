@@ -25,6 +25,11 @@ function Navbar() {
     dispatch(logout());
     setIsDropdownOpen(false);
   };
+    // useEffect(() => {
+    //     window.onclick = () => {
+    //         setIsDropdownOpen(false);
+    //     };
+    // },[]);
 
   useEffect(() => {
     window.onclick = () => {

@@ -32,7 +32,6 @@ const UserLogin = ({ setRegisterTab }) => {
         e.preventDefault();
         try {
             setLoading(true);
-
             const response = await axios.post(`${requestUrl}/user/login`, formData);
             if (response.status === 200) {
                 toast.success("🚀 Login successful!");
@@ -43,6 +42,8 @@ const UserLogin = ({ setRegisterTab }) => {
                 }
                 dispatch(login(obj));
                 navigate(`/user/dashboard`);
+                console.log('Login successful:', response.data.data);
+                window.localStorage.setItem("accessToken",response.data.data.accessToken);
             } else {
                 toast.error("Login failed. Please try again.");
             }

@@ -8,6 +8,9 @@
 .leaflet-marker-icon:nth-child(2){
   filter: hue-rotate(120deg);
 }
+textarea {
+  resize: none;
+}
 .marker-start {
     background-color: red; /* Color for 'You' marker */
     width: 20px;

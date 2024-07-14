@@ -9,6 +9,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // Serve static files from the public folder
 app.use(express.static(path.join(process.cwd(), 'public')));
@@ -25,5 +26,12 @@ app.use("/rp", ragpickerRouter);
 app.use("/booking" , bookingRouter)
 app.use("/rating" , ratingRouter)
 app.use('/users',fetchRouters);
+
+import bookingRouter from './routes/booking.router.js';
+import paymentRouter from './routes/payment.router.js';
+app.use("/user", userRouter);
+app.use("/rp", ragpickerRouter);
+app.use("/payment" , paymentRouter);
+app.use("/booking" , bookingRouter);
 
 export default app;
