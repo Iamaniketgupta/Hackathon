@@ -73,7 +73,7 @@ const LiveMap = () => {
   }, [userPosition]);
 
   return (
-    <div className="mt-10 w-full h-full rounded-xl relative md:px-5">
+    <div className=" w-full h-full rounded-xl relative ">
       {userPosition && (
         <MapContainer 
           center={userPosition} 
@@ -112,7 +112,7 @@ const LiveMap = () => {
 
       <button
         onClick={fetchLiveLocation}
-        className="absolute top-24 left-3 md:left-7 z-[500] bg-blue-500 text-white p-2 rounded shadow-lg"
+        className="absolute top-24 left-3 md:left-3 z-[500] bg-blue-500 text-white p-2 rounded shadow-lg"
       >
         <IoMdLocate size={25} />
       </button>
