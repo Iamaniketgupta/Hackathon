@@ -177,11 +177,37 @@ const updateCoordinates = asyncHandler(async (req, res) => {
     res.status(200).json(new ApiResponse(200, user, "Coordinates updated successfully"));
 });
 
+const getCurrentUser = asyncHandler(async (req, res) => {
+    console.log("req.user:", req.user);
+    if (!req.user || !req.user._id) {
+        return res.status(401).json(new ApiResponse(401, null, "User not authenticated"));
+    }
+
+    const userId = req.user._id; // Make sure this is an ObjectId
+    console.log("User ID:", userId);
+
+    // Fetch user details from the database
+    const user = await User.findById(userId);
+    if (!user) {
+        return res.status(404).json(new ApiResponse(404, null, "User not found"));
+    }
+
+    res.status(200).json(
+        new ApiResponse(
+            200,
+            user,
+            "User fetched successfully"
+        )
+    );
+});
+
+
 export {
     initiateRegister,
     login,
     verifyOtp,
     getUserById,
     updateProfilePicture,
-    updateCoordinates
+    updateCoordinates,
+    getCurrentUser
 };

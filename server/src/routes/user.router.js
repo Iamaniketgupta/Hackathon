@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import multer from 'multer';
 import { verifyJwt } from '../middlewares/auth.middleware.js';
-import { login, initiateRegister, verifyOtp, getUserById, updateProfilePicture } from '../controllers/user.controller.js';
+import { login, initiateRegister, verifyOtp, getUserById, updateProfilePicture ,getCurrentUser} from '../controllers/user.controller.js';
 import { upload } from "../middlewares/multer.js";
 import { updateCoordinates } from '../controllers/ragpicker.controller.js';
 const router = Router();
@@ -17,4 +17,5 @@ router.route("/update-coordinates").post(verifyJwt , updateCoordinates);
 router.route("/:id").get(verifyJwt, getUserById); // Get user by ID (protected route)
 router.route("/profile-picture").post(verifyJwt, upload.single('profilePicture'), updateProfilePicture); // Update profile picture (protected route)
 
+router.get("/v/getCurrentUser" , verifyJwt, getCurrentUser)
 export default router;
