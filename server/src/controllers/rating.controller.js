@@ -64,6 +64,7 @@ const postRatingReview = asyncHandler(async (req, res) => {
 
     // Update the ragpicker's rating
     ragpickerExists.ratings = averageRating;
+    ragpickerExists.numberOfRating = totalRatings;
     await ragpickerExists.save();
 
     return res.status(200).json(new ApiResponse(200, ragpickerExists, "Rating review added/updated successfully"));
