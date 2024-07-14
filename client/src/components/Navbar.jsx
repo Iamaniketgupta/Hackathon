@@ -15,11 +15,11 @@ function Navbar() {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
 
-    useEffect(() => {
-        window.onclick = () => {
-            setIsDropdownOpen(false);
-        };
-    },[]);
+    // useEffect(() => {
+    //     window.onclick = () => {
+    //         setIsDropdownOpen(false);
+    //     };
+    // },[]);
 
     useEffect(() => {
         if (isMobileMenuOpen) {

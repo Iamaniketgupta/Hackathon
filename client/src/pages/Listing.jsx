@@ -12,13 +12,13 @@ function Listing() {
                 <section className='min-h-screen min-w-screen flex flex-col justify-center items-center mt-20'>
                     <h1 className='text-2xl md:text-4xl font-bold tracking-tight text-white text-center mb-10'>Book Your RagPickers 🧹</h1>
                     <div className="Sort mb-10 w-full">
-                        <form class="max-w-sm">
-                            <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">                        
+                        <form className="max-w-sm">
+                            <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">                        
                                 <h2 className='text-xl w-full font-bold'>Sort By</h2>                            
                             </label>
-                            <select id="countries" class="bg-transparent text-lg border border-white/50 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5   dark:placeholder-gray-400
+                            <select id="countries" className="bg-transparent text-lg border border-white/50 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5   dark:placeholder-gray-400
                             dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 font-bold">
-                                <option selected value="" className='bg-gray-900'>Choose Sort By</option>
+                                <option selected value={""} hidden className='bg-gray-900'>Choose Sort By</option>
                                 <option value="cost" className='bg-gray-900'>Cost 💰</option>
                                 <option value="ratings" className='bg-gray-900'>Ratings 🌟</option>
                                 <option value="distance" className='bg-gray-900'>Distance 🚴‍♂️</option>

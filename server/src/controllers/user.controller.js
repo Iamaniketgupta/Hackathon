@@ -117,7 +117,6 @@ const login = asyncHandler(async (req, res) => {
 // Get user by ID
 const getUserById = asyncHandler(async (req, res) => {
     const { id } = req.params;
-
     if (!id) {
         throw new ApiError(400, 'User ID is required');
     }
