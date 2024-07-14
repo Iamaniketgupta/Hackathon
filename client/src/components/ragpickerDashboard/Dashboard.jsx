@@ -196,7 +196,7 @@ const Dashboard = () => {
           ) : (
             unacceptedBookings.map((booking) => (
               <div key={booking._id}>
-                <BookingOffers clientImage={booking.user?.pfp} clientName={booking.user?.name} timeSlot={booking.timeSlot} />
+                <BookingOffers clientImage={booking.user?.pfp} clientName={booking.user?.name} timeSlot={booking.timeSlot} bookingId={booking._id} />
               </div>
             ))
           )}

@@ -24,7 +24,7 @@ function Listing() {
     }, []);
 
    
-    const getAllRagPickerss = async () => {
+    const getAllRagPickers = async () => {
         try {
             setLoading(true);
             const res = await axios.get(`${requestUrl}/users/rp/all`);
