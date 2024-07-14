@@ -1,12 +1,12 @@
 import React from 'react';
 import { FaUser, FaInfoCircle, FaDollarSign } from 'react-icons/fa';
 
-const OngoingJob = ({ 
-  timeSlot = "7 - 9 PM", 
-  clientName = "Suraj", 
-  description = "Hai kuch abhi chhod de", 
-  price = "890", 
-  clientImage 
+const OngoingJob = ({
+  timeSlot = "7 - 9 PM",
+  clientName = "Suraj",
+  description = "Hai kuch abhi chhod de",
+  price = "890",
+  clientImage
 }) => {
   return (
     <div className='backdrop-blur-md bg-white/10 text-white p-4 rounded-lg shadow-lg w-[90%] h-[80%] mx-auto flex flex-col justify-between'>
@@ -16,9 +16,9 @@ const OngoingJob = ({
           <p className='text-sm font-medium'>{clientName}</p>
         </div>
         <div className='text-xl font-bold text-green-400'>
-        <span className='text-xl font-bold text-green-400'>
-  ₹ {price}
-</span>
+          <span className='text-xl font-bold text-green-400'>
+            ₹ {price}
+          </span>
         </div>
       </div>
 

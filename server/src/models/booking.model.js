@@ -26,6 +26,10 @@ const bookingSchema = new mongoose.Schema({
   isPaid:{
     type:Boolean,
     default:false
+  },
+  status:{
+    type:String,
+    default:"pending"
   }
 }, { timestamps: true });
 

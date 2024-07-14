@@ -8,7 +8,7 @@ import "./style.css"
 const Dashboard = () => {
     
   return (
-    <div className='p-4 text-white'>
+    <div className='p-4 text-white max-h-screen main' style={{overflowY:"scroll"}}>
       <div className='flex flex-wrap justify-around gap-4'>
         {/* Total Booking Card */}
         <div className='backdrop-blur-md bg-white/10 text-white p-4 rounded-lg shadow-md max-w-[250px] flex-1'>

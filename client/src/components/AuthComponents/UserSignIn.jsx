@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Otp from './components/Otp';
 import { FaRegEyeSlash, FaEye } from "react-icons/fa";
@@ -13,11 +13,37 @@ const UserSignin = ({ setRegisterTab }) => {
         username: '',
         email: '',
         password: '',
+        lat:'',
+        long:'',
+        state:'',
+        city:''
     });
 
     const [otpsent, setOtpSent] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
+
+    const fetchLocation = async()=>{
+        try {
+            const res = await axios.get('https://ipapi.co/json/');
+            console.log("response : " , res);
+            if(res){
+                const {latitude , longitude , city ,region } = res.data;
+                setFormData({
+                    ...formData,
+                    ['lat']: latitude,
+                    ['long']: longitude,
+                    ['city']: city,
+                    ['state']: region,
+                });
+            }
+        } catch (error) {
+            console.log("error :  ", error)
+        }
+    }
+
+
+    console.log("formdata :",formData)
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -59,6 +85,11 @@ const UserSignin = ({ setRegisterTab }) => {
     const togglePassVis = () => {
         setShowPassword(!showPassword);
     };
+
+    useEffect(() => {
+        fetchLocation();
+    }, [])
+    
 
     return (
         <div className=' text-gray-800 max-w-md mx-auto p-5'>
@@ -116,6 +147,37 @@ const UserSignin = ({ setRegisterTab }) => {
                                 onChange={handleChange}
                             />
                         </div>
+                        <div className='space-y-2'>
+                            <label htmlFor="city" className='block text-sm px-2 font-medium text-gray-700'>
+                                City <span className='text-red-500'>*</span>
+                            </label>
+                            <input
+                                type="text"
+                                autoComplete="off"
+                                className='bg-gray-100 outline-none focus:ring-1 ring-blue-500 px-4 py-2 text-gray-900 rounded-full w-full'
+                                name="city"
+                                id="city"
+                                required
+                                placeholder='City'
+                                value={formData.city}
+                                onChange={handleChange}
+                            />
+                        </div><div className='space-y-2'>
+                            <label htmlFor="state" className='block text-sm px-2 font-medium text-gray-700'>
+                                State <span className='text-red-500'>*</span>
+                            </label>
+                            <input
+                                type="text"
+                                autoComplete="off"
+                                className='bg-gray-100 outline-none focus:ring-1 ring-blue-500 px-4 py-2 text-gray-900 rounded-full w-full'
+                                name="state"
+                                id="state"
+                                required
+                                placeholder='State'
+                                value={formData.state}
+                                onChange={handleChange}
+                            />
+                        </div>
                         <div className='space-y-2 relative mb-4'>
                             <label htmlFor="password" className='block text-sm px-2 font-medium text-gray-700'>
                                 Password <span className='text-red-500'>*</span>
@@ -168,7 +230,7 @@ const UserSignin = ({ setRegisterTab }) => {
                     </form>
                 </>
             ) : (
-                <Otp formData={formData} requestapi={requestapi} setOtpSent={setOtpSent} />
+                <Otp formData={formData} requestapi={requestapi} setOtpSent={setOtpSent} type={"user"} />
             )}
         </div>
     );

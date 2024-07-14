@@ -17,10 +17,18 @@ app.use(express.static(path.join(process.cwd(), 'public')));
 // Routes
 import userRouter from "./routes/user.router.js";
 import ragpickerRouter from './routes/ragpicker.router.js';
+import bookingRouter from './routes/booking.router.js'
+import ratingRouter from './routes/rating.router.js'
+import fetchRouters from './routes/fetchrouters.js'
+
+app.use("/user", userRouter);
+app.use("/rp", ragpickerRouter);
+app.use("/booking" , bookingRouter)
+app.use("/rating" , ratingRouter)
+app.use('/users',fetchRouters);
+
 import bookingRouter from './routes/booking.router.js';
 import paymentRouter from './routes/payment.router.js';
-
-
 app.use("/user", userRouter);
 app.use("/rp", ragpickerRouter);
 app.use("/payment" , paymentRouter);

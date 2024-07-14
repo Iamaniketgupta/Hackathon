@@ -27,7 +27,6 @@ const ragPickerSchema = new mongoose.Schema({
   },
   address: {
     type: String,
-    
   },
   lat: {
     type: Number,
@@ -35,7 +34,6 @@ const ragPickerSchema = new mongoose.Schema({
   },
   long: {
     type: Number,
-    
   },
   gender: {
     type: String,
@@ -45,7 +43,6 @@ const ragPickerSchema = new mongoose.Schema({
     type: Number,
     
   },
-  reviews: [reviewSchema],
   ratings: {
     type: Number,
     min: 0,
@@ -64,6 +61,18 @@ const ragPickerSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true
+  },
+  isAvailable:{
+    type:Boolean,
+    default:true
+  },
+  state:{
+    type:String,
+    required:true
+  },
+  city:{
+    type:String,
+    required:true
   }
 }, { timestamps: true });
 
