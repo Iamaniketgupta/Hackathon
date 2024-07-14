@@ -7,6 +7,7 @@ import asyncHandler from 'express-async-handler';
 import Razorpay from "razorpay";
 import { validatePaymentVerification } from "razorpay/dist/utils/razorpay-utils.js"; 
 
+import { Booking } from "../models/booking.model.js";
 const createOrder = asyncHandler(async (req, res) => {
     const { username, hours } = req.body;
     const user_id = req.user._id;
@@ -76,6 +77,19 @@ const verifyOrder = asyncHandler(async (req, res) => {
     if (isValid) {
         payment.paymentStatus = true;
         await payment.save();
+        const {user_id, ragpicker_id , amount} = payment;
+        const booking = await  Booking.create(
+            {
+                user:user_id,
+                ragPicker:ragpicker_id,
+                payment:amount,
+                isPaid:true
+            }
+        )
+        if(!booking){
+            throw new ApiError(501 , "Error while creating booking ");
+        }
+        
         res.redirect(`${process.env.CLIENT_URL}/${ragpicker.username}?paymentdone=true`);
     } else {
         throw new ApiError(400, "Payment verification failed");
