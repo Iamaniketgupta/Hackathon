@@ -5,9 +5,9 @@ import path from 'path';
 const app = express();
 
 app.use(cors({
-    origin: process.env.CLIENT_URL || '*',
+    origin: process.env.CLIENT_URL,
 }));
-
+ 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
