@@ -28,9 +28,6 @@ app.use("/booking" , bookingRouter)
 app.use("/rating" , ratingRouter)
 app.use('/users',fetchRouters);
 
-
-app.use("/user", userRouter);
-app.use("/rp", ragpickerRouter);
 app.use("/payment" , paymentRouter);
 app.use("/booking" , bookingRouter);
 
