@@ -20,20 +20,31 @@ function Listing() {
     };
 
     useEffect(() => {
+<<<<<<< HEAD
         getAllRagPickers();
     }, []);
 
     const getAllRagPickers = async () => {
+=======
+        getAllRagPickerss();
+    }, []);
+
+    const getAllRagPickerss = async () => {
+>>>>>>> bcfcc5da96d3daf670e9f4e3cc74ab89da42dc8d
         try {
             setLoading(true);
             const res = await axios.get(`${requestUrl}/users/rp/all`);
             setAllRagPickers(res?.data?.ragpickers);
+<<<<<<< HEAD
+=======
+            console.log(res.data.ragpickers);
+>>>>>>> bcfcc5da96d3daf670e9f4e3cc74ab89da42dc8d
             setLoading(false);
         } catch (error) {
             toast.error('Something went wrong');
             setLoading(false);
         }
-    }
+    };
 
     return (
         <>
@@ -52,7 +63,7 @@ function Listing() {
                                 id="sortBy"
                                 className="w-full p-3 text-gray-300 bg-transparent border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                             >
-                                <option selected value="" className="bg-gray-900">Choose Sort By</option>
+                                <option value="" className="bg-gray-900">Choose Sort By</option>
                                 <option value="cost" className="bg-gray-900">Cost 💰</option>
                                 <option value="ratings" className="bg-gray-900">Ratings 🌟</option>
                                 <option value="distance" className="bg-gray-900">Distance 🚴‍♂️</option>
