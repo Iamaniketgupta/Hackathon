@@ -6,10 +6,12 @@ import RagCard from '../components/RagCard';
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { BsFillGrid3X3GapFill } from "react-icons/bs";
 import ListingMap from '../Maps/ListingMap';
+
 import { requestUrl } from '../../constant';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { getDistance } from 'geolib';
+import RagCardSkeleton from '../components/RagCardSkeleton';
 
 function Listing() {
   const [isGridView, setIsGridView] = useState(true);
@@ -86,6 +88,7 @@ function Listing() {
 
   return (
     <>
+
       <Background>
         <Navbar />
         <section className='min-h-screen text-white flex flex-col justify-center items-center mt-20'>
@@ -93,7 +96,7 @@ function Listing() {
             Book Your RagPickers 🧹
           </h1>
           <div className="px-5 gap-5 mb-10 w-full flex flex-col md:flex-row items-center justify-between">
-            <form className="max-w-sm p-6 bg-white flex-grow bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg shadow-md">
+            <form className="w-full md:max-w-md p-6 bg-white flex-grow bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg shadow-md">
               <label htmlFor="sortBy" className="block text-lg mb-4 px-2 font-bold text-white">
                 Sort By
               </label>
@@ -104,6 +107,9 @@ function Listing() {
                 onChange={(e) => setSortBy(e.target.value)}
               >
                 <option value="" hidden>Choose Sort By</option>
+                <option value="cost" className='bg-gray-900'>Cost 💰</option>
+                <option value="ratings" className='bg-gray-900'>Ratings 🌟</option>
+                <option value="distance" className='bg-gray-900'>Distance 🚴‍♂️</option>
                 <option value="cost">Cost 💰</option>
                 <option value="ratings">Ratings 🌟</option>
                 <option value="distance">Distance 🚴‍♂️</option>
@@ -122,10 +128,19 @@ function Listing() {
           {isGridView ? (
             <div className="flex flex-col md:grid md:grid-cols-3 lg:grid-cols-4 grid-cols-1 gap-10 items-center justify-center w-full">
               {loading ? (
-                <p>Loading...</p>
-              ) : (
+                <>
+                  <RagCardSkeleton/>
+                  <RagCardSkeleton/>
+                  <RagCardSkeleton/>
+                  <RagCardSkeleton/>
+                  <RagCardSkeleton/>
+                  <RagCardSkeleton/>
+                  </>
+                ) : (
                 (sortedRagPickers || ragPickers)?.map((item) => (
+                    <>
                   <RagCard key={item._id} data={item} />
+                  </>
                 ))
               )}
             </div>
