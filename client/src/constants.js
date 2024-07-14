@@ -1,1 +1,1 @@
-export const BACKEND_URL = "http://onepunchcoders-api.vercel.app"
+export const BACKEND_URL = "https://hackathon-b2bk.vercel.app"
