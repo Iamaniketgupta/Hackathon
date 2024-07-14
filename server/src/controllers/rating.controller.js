@@ -20,7 +20,6 @@ const getRatingsByRagPickerUsername = asyncHandler(async (req, res) => {
     res.status(200).json(new ApiResponse(200, ratings, 'Ratings retrieved successfully'));
 });
 
-
 // Add a new rating review by a user
 const postRatingReview = asyncHandler(async (req, res) => {
     const { ragpickerid, feedback, ratingstars } = req.body;
@@ -45,7 +44,6 @@ const postRatingReview = asyncHandler(async (req, res) => {
         existingRating.feedback = feedback;
         existingRating.ratingstars = ratingstars;
         await existingRating.save();
-        return res.status(200).json(new ApiResponse(200, existingRating, "Rating review updated successfully"));
     } else {
         // Save the new rating
         const rating = new Rating({
@@ -56,10 +54,21 @@ const postRatingReview = asyncHandler(async (req, res) => {
         });
 
         await rating.save();
-        return res.status(201).json(new ApiResponse(201, rating, "Rating review added successfully"));
     }
-});
 
+    // Recalculate the average rating
+    const allRatings = await Rating.find({ ragpickerid });
+    const totalRatings = allRatings.length;
+    const sumRatings = allRatings.reduce((sum, rating) => sum + rating.ratingstars, 0);
+    const averageRating = sumRatings / totalRatings;
+
+    // Update the ragpicker's rating
+    ragpickerExists.ratings = averageRating;
+    ragpickerExists.numberOfRating = totalRatings;
+    await ragpickerExists.save();
+
+    return res.status(200).json(new ApiResponse(200, ragpickerExists, "Rating review added/updated successfully"));
+});
 
 
 export { getRatingsByRagPickerUsername,postRatingReview };

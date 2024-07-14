@@ -77,6 +77,10 @@ const ragPickerSchema = new mongoose.Schema({
   city:{
     type:String,
     required:true
+  },
+  numberOfRating:{
+    type:Number,
+    default:0
   }
 }, { timestamps: true });
 
